@@ -53,12 +53,12 @@ class Daliys extends Common{
     public function test(){
         $this->user_id = 1;
         $post = [
-            'id'=>1,
-            'people_name'=>'陈生',
+            //'id'=>1,
+            'people_name'=>'陈生ss',
             'people_idnumber'=>'00000000000',
-            'people_mobile'=>'2423432424',
-            'people_idcardpic0'=>'people_idcardpic000000',
-            'people_idcardpic1'=>'people_idcardpic111111',
+            'people_mobile'=>'33333333',
+            'people_idcardpic0'=>'people_idcardpic7777',
+            'people_idcardpic1'=>'people_idcardpic999999',
             'gobeijing_path'=>'长途客运',
             'content'=>'有人要上访有人要上访有人要上访有人要上访有人要上访有人要上访有人要上访有人要上访有人要上访',
             'gotype'=>'赴省上访',
@@ -66,14 +66,14 @@ class Daliys extends Common{
             'action_desn'=>'扬言报复扬言报复扬言报复',
             'work_content'=>'正常33',
             'live_photos'=>[
-                ['id'=>1,'src'=>'live_photos-11'],
-                ['id'=>2,'src'=>'live_photos-22'],
-                ['id'=>3,'src'=>'live_photos33'],
+                ['id'=>0,'src'=>'live_photos-11'],
+                ['id'=>0,'src'=>'live_photos-22'],
+                ['id'=>0,'src'=>'live_photos33'],
             ],
             'life_photos'=>[
-                ['id'=>4,'src'=>'life_photo-11'],
-                ['id'=>5,'src'=>'life_photos-22'],
-                ['id'=>6,'src'=>'life_photos-33'],
+                ['id'=>0,'src'=>'life_photo-11'],
+                ['id'=>0,'src'=>'life_photos-22'],
+                ['id'=>0,'src'=>'life_photos-33'],
             ]
         ];
         return $this->post($post);
@@ -142,35 +142,44 @@ class Daliys extends Common{
         $wphoto->where('work_id','=',$daliyworks->id)->update(['isdel'=>1]);
 
         $photo_data = [];
-        foreach($post['live_photos'] as $k=>$lphoto){
-            $save = [
-                'id'=>$lphoto['id'],
-                'work_id'=>$daliyworks->id,
-                'type'=>1,
-                'sort'=>$k,
-                'path'=>$lphoto['src'],
-                'isdel'=>0
-            ];
-            /*if($lphoto['id']>0){
-                $save['id'] =
-                $wphoto->
-            }*/
-            $photo_data[] = $save;
+        if(!empty($post['live_photos'])){
+            foreach($post['live_photos'] as $k=>$lphoto){
+                $save = [
+//                    'id'=>isset($lphoto['id'])?$lphoto['id']:0,
+                    'work_id'=>$daliyworks->id,
+                    'type'=>1,
+                    'sort'=>$k,
+                    'path'=>$lphoto['src'],
+                    'isdel'=>0
+                ];
+                if(isset($lphoto['id']) && $lphoto['id']>0){
+                    $save['id'] = $lphoto['id'];
+                }
+                $photo_data[] = $save;
+            }
         }
 
-        foreach($post['life_photos'] as $k=>$lphoto){
-            $photo_data[] = [
-                'id'=>$lphoto['id'],
-                'work_id'=>$daliyworks->id,
-                'type'=>2,
-                'sort'=>$k,
-                'path'=>$lphoto['src'],
-                'isdel'=>0
-            ];
+        if(!empty($post['life_photos'])){
+            foreach($post['life_photos'] as $k=>$lphoto){
+                $save = [
+//                    'id'=>isset($lphoto['id'])?$lphoto['id']:0,
+                    'work_id'=>$daliyworks->id,
+                    'type'=>2,
+                    'sort'=>$k,
+                    'path'=>$lphoto['src'],
+                    'isdel'=>0
+                ];
+
+                if(isset($lphoto['id']) && $lphoto['id']>0){
+                    $save['id'] = $lphoto['id'];
+                }
+                $photo_data[] = $save;
+            }
         }
 
-
-        $wphoto->saveAll($photo_data);
+        if(!empty($photo_data)){
+            $wphoto->saveAll($photo_data);
+        }
 
 //        dump($photo_data);
         return $this->res([

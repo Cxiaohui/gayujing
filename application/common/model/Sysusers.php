@@ -19,6 +19,10 @@ class Sysusers extends ModelBase{
     protected $insert = ['logpwd'];//
     protected $update = [];
 
+    public function tehuworks()
+    {
+        return $this->hasMany('Tehuworks','post_user_id','id');
+    }
 
     public function getLogstat()
     {
@@ -42,15 +46,14 @@ class Sysusers extends ModelBase{
         return [
             'user_id'=>$this->id,
             'name'=>$this->name,
+            'gender'=>$this->gender,
             'mobile'=>$this->mobile,
             'education'=>$this->education,
             'headpic'=>$this->headpic,
+            'logaccount'=>$this->logaccount,
         ];
     }
 
 
-    public function tehuworks()
-    {
-        return $this->hasMany('Tehuworks','post_user_id','id');
-    }
+
 }

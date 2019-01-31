@@ -3,22 +3,21 @@
  * Created by PhpStorm.
  * User: chenxh
  * Date: 2019/1/31
- * Time: 20:11
+ * Time: 23:45
  */
 namespace app\common\model;
 
-class WorksPhotos extends ModelBase{
-
+class EventPeoples extends ModelBase{
     protected $autoWriteTimestamp = 'datetime';
+
 
     protected $auto = [];
     protected $insert = [];//
     protected $update = [];
 
 
-    /*public function daliywork()
+    /*public function event()
     {
-        return $this->belongsTo('daliyworks','work_id','id');
+        return $this->belongsTo('Events','event_id','id');
     }*/
-
 }

@@ -12,6 +12,10 @@ use app\common\validate\Daliywork as DaliyworkValidate;
 
 class Daliys extends Common{
 
+    public function __construct($need_check=false)
+    {
+        parent::__construct(true);
+    }
 
     public function index(){
 
@@ -109,14 +113,15 @@ class Daliys extends Common{
                 'msg'=>$daliyworkValidate->getError()
             ]);
         }
-
+        $status = 1;
         if(isset($post['id']) && $post['id']>0){
+            $status = 2;
             $daliyworks = Daliyworks::get($post['id']);
         }else{
             $daliyworks = new Daliyworks();
         }
         $daliyworks->post_user_id = $this->user_id;
-        $daliyworks->status = 1;
+        $daliyworks->status = $status;
         $daliyworks->people_name = $post['people_name'];
         $daliyworks->people_idnumber = $post['people_idnumber'];
         $daliyworks->people_mobile = $post['people_mobile'];

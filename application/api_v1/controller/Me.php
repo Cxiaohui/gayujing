@@ -12,8 +12,8 @@ class Me extends Common{
 
     public function __construct($need_check=false)
     {
-        parent::__construct(false);
-        $this->user_id = 1;
+        parent::__construct(true);
+
     }
 
     public function index(){

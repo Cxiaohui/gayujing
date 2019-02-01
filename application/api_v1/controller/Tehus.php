@@ -13,12 +13,10 @@ class Tehus extends Common{
 
     public function __construct($need_check=false)
     {
-        parent::__construct(false);
+        parent::__construct(true);
     }
 
     public function index(){
-
-
 
     }
 
@@ -107,15 +105,16 @@ class Tehus extends Common{
                 'msg'=>$tehuValidate->getError()
             ]);
         }
-
+        $status = 1;
         if(isset($post['id']) && $post['id']>0){
+            $status = 2;
             $tehuworks = Tehuworks::get($post['id']);
         }else{
             $tehuworks = new Tehuworks();
         }
 
         $tehuworks->post_user_id = $this->user_id;
-        $tehuworks->status = 1;
+        $tehuworks->status = $status;
 
         $tehuworks->xinfang_name = $post['xinfang_name'];
         $tehuworks->xinfang_idnumber = $post['xinfang_idnumber'];

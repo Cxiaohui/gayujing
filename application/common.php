@@ -14,3 +14,22 @@
 function create_log_pwd($pwd,$stat){
     return md5($stat.md5($pwd.$stat));
 }
+
+function tostring($data){
+    if(empty($data)){
+        return $data;
+    }
+    if(is_string($data)){
+        return $data;
+    }
+    foreach($data as $k=>$da){
+        if(is_array($da)){
+            $data[$k] = tostring($da);
+        }else if(is_object($da)){
+            $data[$k] = $da;
+        }else if(!is_string($da)){
+            $data[$k] = (string) $da;
+        }
+    }
+    return $data;
+}

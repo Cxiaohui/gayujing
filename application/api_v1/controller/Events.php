@@ -12,6 +12,10 @@ use app\common\validate\Event as EventValidate;
 
 class Events extends Common{
 
+    public function __construct($need_check=false)
+    {
+        parent::__construct(true);
+    }
 
     public function index(){
 
@@ -68,6 +72,7 @@ class Events extends Common{
         return $this->post($post);
     }
 
+
     public function post($post=[]){
 
         if(empty($post)){
@@ -99,15 +104,16 @@ class Events extends Common{
                 'msg'=>$eventValidate->getError()
             ]);
         }
-
+        $status = 1;
         if(isset($post['id']) && $post['id']>0){
+            $status = 2;
             $event = EventsModel::get($post['id']);
         }else{
             $event = new EventsModel();
         }
 
         $event->post_user_id = $this->user_id;
-        $event->status = 1;
+        $event->status = $status;
         $event->type = $post['type'];
         $event->group_name = $post['group_name'];
         $event->event_cate = $post['event_cate'];

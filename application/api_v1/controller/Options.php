@@ -10,6 +10,10 @@ namespace app\api_v1\controller;
 
 class Options extends Common{
 
+    public function __construct($need_check=false)
+    {
+        parent::__construct(false);
+    }
 
     public function index(){
 

@@ -45,6 +45,7 @@ class Sysusers extends ModelBase{
     public function returnInfo(){
         return [
             'user_id'=>$this->id,
+            'type'=>$this->type,
             'name'=>$this->name,
             'gender'=>$this->gender,
             'mobile'=>$this->mobile,

@@ -125,8 +125,14 @@ class Daliys extends Common{
         $daliyworks->people_name = $post['people_name'];
         $daliyworks->people_idnumber = $post['people_idnumber'];
         $daliyworks->people_mobile = $post['people_mobile'];
-        $daliyworks->people_idcardpic0 = $post['people_idcardpic0'];
-        $daliyworks->people_idcardpic1 = $post['people_idcardpic1'];
+
+        if(isset($post['people_idcardpic0'])){
+            $daliyworks->people_idcardpic0 = $post['people_idcardpic0'];
+        }
+        if(isset($post['people_idcardpic1'])){
+            $daliyworks->people_idcardpic1 = $post['people_idcardpic1'];
+        }
+
         $daliyworks->gobeijing_path = $post['gobeijing_path'];
         $daliyworks->content = $post['content'];
         $daliyworks->gotype = $post['gotype'];

@@ -119,8 +119,14 @@ class Tehus extends Common{
         $tehuworks->xinfang_name = $post['xinfang_name'];
         $tehuworks->xinfang_idnumber = $post['xinfang_idnumber'];
         $tehuworks->xinfang_mobile = $post['xinfang_mobile'];
-        $tehuworks->xinfang_idcardpic0 = $post['xinfang_idcardpic0'];
-        $tehuworks->xinfang_idcardpic1 = $post['xinfang_idcardpic1'];
+
+        if(isset($post['xinfang_idcardpic0'])){
+            $tehuworks->xinfang_idcardpic0 = $post['xinfang_idcardpic0'];
+        }
+        if(isset($post['xinfang_idcardpic1'])){
+            $tehuworks->xinfang_idcardpic1 = $post['xinfang_idcardpic1'];
+        }
+
 
         $tehuworks->gobeijing_path = $post['gobeijing_path'];
         $tehuworks->gobeijing_type = $post['gobeijing_type'];
@@ -128,9 +134,12 @@ class Tehus extends Common{
         $tehuworks->tongxi_name = $post['tongxi_name'];
         $tehuworks->tongxi_idnumber = $post['tongxi_idnumber'];
         $tehuworks->tongxi_mobile = $post['tongxi_mobile'];
-        $tehuworks->tongxi_idcardpic0 = $post['tongxi_idcardpic0'];
-        $tehuworks->tongxi_idcardpic1 = $post['tongxi_idcardpic1'];
-
+        if(isset($post['tongxi_idcardpic0'])){
+            $tehuworks->tongxi_idcardpic0 = $post['tongxi_idcardpic0'];
+        }
+        if(isset($post['tongxi_idcardpic1'])){
+            $tehuworks->tongxi_idcardpic1 = $post['tongxi_idcardpic1'];
+        }
 
         $tehuworks->acttype_inbeijing = $post['acttype_inbeijing'];
         $tehuworks->address_inbeijing = $post['address_inbeijing'];

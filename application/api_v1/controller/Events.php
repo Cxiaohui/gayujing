@@ -144,22 +144,24 @@ class Events extends Common{
         }
 
         $people_data = [];
-
-        foreach($post['people_list'] as $peo){
-            $save = [
+        if(!empty($post['people_list'])){
+            foreach($post['people_list'] as $peo){
+                $save = [
 //                'id'=>isset($peo['id'])?$peo['id']:0,
-                'event_id'=>$event->id,
-                'name'=>$peo['name'],
-                'idnumber'=>$peo['idnumber'],
-                'mobile'=>$peo['mobile'],
-                'isdel'=>0
-            ];
+                    'event_id'=>$event->id,
+                    'name'=>$peo['name'],
+                    'idnumber'=>$peo['idnumber'],
+                    'mobile'=>$peo['mobile'],
+                    'isdel'=>0
+                ];
 
-            if(isset($peo['id']) && $peo['id']>0){
-                $save['id'] = $peo['id'];
+                if(isset($peo['id']) && $peo['id']>0){
+                    $save['id'] = $peo['id'];
+                }
+                $people_data[] = $save;
             }
-            $people_data[] = $save;
         }
+
 
         if(!empty($people_data)){
             $event_people->saveAll($people_data);

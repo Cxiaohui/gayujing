@@ -39,12 +39,32 @@ class Test extends Common{
         $sysuser->save($data);
     }
 
-    public function uppwd(){
-        $pwd = '111111';
-        Sysusers::get(1);
+    public function t1(){
 
+        $post = [
+            'group_name'=>2
+        ];
+        //$post['group_name'];
 
+        $gname = function() use ($post){
 
+            if(is_numeric($post['group_name'])){
+                $gnamekv = config('event_groups_kv');
+                return isset($gnamekv[$post['group_name']]) ? $gnamekv[$post['group_name']]: '';
+            }
+            return $post['group_name'];
+        };
+
+        $kvname = function($key,$kv_key) use ($post){
+
+            if(is_numeric($post[$key])){
+                $gnamekv = config($kv_key);
+                return isset($gnamekv[$post[$key]]) ? $gnamekv[$post[$key]] : '';
+            }
+            return $post[$key];
+        };
+
+        echo $kvname('group_name','event_groups_kv');
     }
 
     public function getSysuser(){

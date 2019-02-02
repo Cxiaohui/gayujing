@@ -127,8 +127,17 @@ class Tehus extends Common{
             $tehuworks->xinfang_idcardpic1 = $post['xinfang_idcardpic1'];
         }
 
+        $kvname = function($key,$kv_key) use ($post){
 
-        $tehuworks->gobeijing_path = $post['gobeijing_path'];
+            if(is_numeric($post[$key])){
+                $gnamekv = config($kv_key);
+                return isset($gnamekv[$post[$key]]) ? $gnamekv[$post[$key]] : '';
+            }
+            return $post[$key];
+        };
+
+
+        $tehuworks->gobeijing_path = $kvname('gobeijing_path','gobeijing_path_kv');//$post['gobeijing_path'];
         $tehuworks->gobeijing_type = $post['gobeijing_type'];
 
         $tehuworks->tongxi_name = $post['tongxi_name'];
@@ -141,7 +150,7 @@ class Tehus extends Common{
             $tehuworks->tongxi_idcardpic1 = $post['tongxi_idcardpic1'];
         }
 
-        $tehuworks->acttype_inbeijing = $post['acttype_inbeijing'];
+        $tehuworks->acttype_inbeijing = $kvname('acttype_inbeijing','acttype_inbeijing_kv');//$post['acttype_inbeijing'];
         $tehuworks->address_inbeijing = $post['address_inbeijing'];
         if($post['lost_time']){
             $tehuworks->lost_time = $post['lost_time'];

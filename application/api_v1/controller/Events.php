@@ -93,7 +93,10 @@ class Events extends Common{
                 'msg'=>'访问错误'
             ]);
         }
-
+        /*if(is_string($post['people_list'])){
+            $post['people_list'] = json_decode($post['people_list'],1);
+        }
+        print_r($post);exit;*/
         $post['post_user_id'] = $this->user_id;
 
         $eventValidate = new EventValidate();
@@ -112,16 +115,26 @@ class Events extends Common{
             $event = new EventsModel();
         }
 
+
+        $kvname = function($key,$kv_key) use ($post){
+
+            if(is_numeric($post[$key])){
+                $gnamekv = config($kv_key);
+                return isset($gnamekv[$post[$key]]) ? $gnamekv[$post[$key]] : '';
+            }
+            return $post[$key];
+        };
+
         $event->post_user_id = $this->user_id;
         $event->status = $status;
         $event->type = $post['type'];
-        $event->group_name = $post['group_name'];
-        $event->event_cate = $post['event_cate'];
+        $event->group_name = $kvname('group_name','event_groups_kv');
+        $event->event_cate = $kvname('event_cate','event_cates_kv');
         $event->happen_time = $post['happen_time'];
         $event->address = $post['address'];
         $event->people_number = $post['people_number'];
         $event->content = $post['content'];
-        $event->do_unit_name = $post['do_unit_name'];
+        $event->do_unit_name = isset($post['do_unit_name'])?$post['do_unit_name']:'';
 
         $res = $event->save();
 
@@ -136,6 +149,11 @@ class Events extends Common{
 
         $event_people->where('event_id','=',$event->id)->update(['isdel'=>1]);
 
+
+        if(is_string($post['people_list'])){
+            $post['people_list'] = json_decode($post['people_list'],1);
+        }
+
         if(empty($post['people_list'])){
             return $this->res([
                 'code'=>202,
@@ -145,10 +163,6 @@ class Events extends Common{
 
         $people_data = [];
         if(!empty($post['people_list'])){
-
-            if(is_string($post['people_list'])){
-                $post['people_list'] = json_decode($post['people_list'],1);
-            }
 
             foreach($post['people_list'] as $peo){
                 $save = [

@@ -133,10 +133,19 @@ class Daliys extends Common{
             $daliyworks->people_idcardpic1 = $post['people_idcardpic1'];
         }
 
-        $daliyworks->gobeijing_path = $post['gobeijing_path'];
+        $kvname = function($key,$kv_key) use ($post){
+
+            if(is_numeric($post[$key])){
+                $gnamekv = config($kv_key);
+                return isset($gnamekv[$post[$key]]) ? $gnamekv[$post[$key]] : '';
+            }
+            return $post[$key];
+        };
+
+        $daliyworks->gobeijing_path = $kvname('gobeijing_path','gobeijing_path_kv');//$post['gobeijing_path'];
         $daliyworks->content = $post['content'];
-        $daliyworks->gotype = $post['gotype'];
-        $daliyworks->action_name = $post['action_name'];
+        $daliyworks->gotype = $kvname('gotype','gotype_kv');//$post['gotype'];
+        $daliyworks->action_name = $kvname('action_name','action_names_kv');//$post['action_name'];
         $daliyworks->action_desn = $post['action_desn'];
         $daliyworks->work_content = $post['work_content'];
 
@@ -154,6 +163,11 @@ class Daliys extends Common{
 
         $photo_data = [];
         if(!empty($post['live_photos'])){
+
+            if(is_string($post['live_photos'])){
+                $post['live_photos'] = json_decode($post['live_photos'],1);
+            }
+
             foreach($post['live_photos'] as $k=>$lphoto){
                 $save = [
 //                    'id'=>isset($lphoto['id'])?$lphoto['id']:0,
@@ -171,6 +185,11 @@ class Daliys extends Common{
         }
 
         if(!empty($post['life_photos'])){
+
+            if(is_string($post['life_photos'])){
+                $post['life_photos'] = json_decode($post['life_photos'],1);
+            }
+
             foreach($post['life_photos'] as $k=>$lphoto){
                 $save = [
 //                    'id'=>isset($lphoto['id'])?$lphoto['id']:0,

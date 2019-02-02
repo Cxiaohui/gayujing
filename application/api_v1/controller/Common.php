@@ -79,30 +79,32 @@ class Common extends ApiCommon{
         }
         $cache_key = config('api_cache_key.cur_user').$this->user_id;
         $user = cache($cache_key);
-        if($user){
+        /*if($user){
             return $user;
-        }
+        }*/
         $user = Sysusers::get($this->user_id);
-        //print_r($user);
+//        print_r($user);
         cache($cache_key,$user->toArray(),300);
         return $user->toArray();
     }
 
     protected function powerCheck(){
         //$user = Sysusers::get($this->user_id);
-
+        if(!$this->user_id){
+            return true;
+        }
         if(!$this->cur_user){
             return false;
         }
 //        print_r($this->cur_user);
-        if(!in_array($this->cur_user['type'],[1,2,3])){
+        if(!in_array($this->cur_user['utype'],[1,2,3])){
             return false;
         }
 
-        if($this->cur_user['type'] == 1){
+        if($this->cur_user['utype'] == 1){
             return true;
         }
-        if($this->cur_user['type'] == 2){
+        if($this->cur_user['utype'] == 2){
             if($this->request->isGet()){
                 return true;
             }

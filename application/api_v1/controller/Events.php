@@ -145,12 +145,17 @@ class Events extends Common{
 
         $people_data = [];
         if(!empty($post['people_list'])){
+
+            if(is_string($post['people_list'])){
+                $post['people_list'] = json_decode($post['people_list'],1);
+            }
+
             foreach($post['people_list'] as $peo){
                 $save = [
 //                'id'=>isset($peo['id'])?$peo['id']:0,
                     'event_id'=>$event->id,
                     'name'=>$peo['name'],
-                    'idnumber'=>$peo['idnumber'],
+                    'idnumber'=>isset($peo['idnumber'])? $peo['idnumber']:'',
                     'mobile'=>$peo['mobile'],
                     'isdel'=>0
                 ];

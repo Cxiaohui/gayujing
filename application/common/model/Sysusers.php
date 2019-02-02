@@ -31,10 +31,7 @@ class Sysusers extends ModelBase{
 
     public function setLogpwdAttr($value,$data)
     {
-        /*print_r([
-            $value,
-            $data
-        ]);*/
+
         return create_log_pwd($value,$data['logstat']);
     }
 
@@ -45,7 +42,7 @@ class Sysusers extends ModelBase{
     public function returnInfo(){
         return [
             'user_id'=>$this->id,
-            'type'=>$this->type,
+            'utype'=>$this->utype,
             'name'=>$this->name,
             'gender'=>$this->gender,
             'mobile'=>$this->mobile,

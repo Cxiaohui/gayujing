@@ -11,16 +11,20 @@ use app\common\model\Sysusers,
 
 class Test extends Common{
 
-
+    public function __construct($need_check=false)
+    {
+        parent::__construct(true);
+    }
     public function addSysuser(){
 
         $sysuser = new Sysusers();
 
         $data = [
-            'name'=>'测试员',
-            'mobile'=>'13344445555',
-            'logaccount'=>'testman',
+            'name'=>'测试员1',
+            'mobile'=>'13322223333',
+            'logaccount'=>'testman1',
             'logpwd'=>'111111',
+            'type'=>3,
             'logstat'=>$sysuser->getLogstat()
         ];
 
@@ -33,6 +37,14 @@ class Test extends Common{
             ];
         }
         $sysuser->save($data);
+    }
+
+    public function uppwd(){
+        $pwd = '111111';
+        Sysusers::get(1);
+
+
+
     }
 
     public function getSysuser(){

@@ -22,7 +22,7 @@ class Record extends Common{
 
         $where = '';
 
-        if($this->cur_user['type']==3){
+        if($this->cur_user['utype']==3){
             $where = " and post_user_id={$this->user_id}";
         }
         $sql = "select * from 
@@ -48,13 +48,15 @@ order by update_time desc
             't'=>'特护期工作',
         ];
         foreach($data as $k=>$da){
+            $data[$k]['type'] =  $da['name'];
             if($da['name']=='e'){
+                $data[$k]['type'] =  $da['name'].$da['type'];
                 $data[$k]['name'] = $da['type']==1?'事件数据采集':'事件预警采集';
             }else{
                 $data[$k]['name'] = $names[$da['name']].($da['type']?'-'.$da['type']:'');
             }
             $data[$k]['timestring'] = date('Y年m月d日 H:i',strtotime($da['update_time']));
-            $data[$k]['type'] =  $da['name'];
+
         }
 
 

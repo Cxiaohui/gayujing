@@ -18,7 +18,7 @@ class Event extends Validate{
         'happen_time'=>'require',
         'address'=>'require',
         'people_number'=>'require',
-        'content'=>'require',
+//        'content'=>'require',
 //        'do_unit_name'=>'require'
     ];
 
@@ -29,7 +29,7 @@ class Event extends Validate{
         'happen_time.require' => '发生时间必须',
         'address.require' => '地点必须',
         'people_number.require' => '人数规模必须',
-        'content.require' => '事因\诉求必须',
+//        'content.require' => '事因\诉求必须',
         'do_unit_name.require' => '处置单位必须'
     ];
 

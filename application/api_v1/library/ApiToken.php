@@ -13,6 +13,7 @@ class ApiToken{
 
     static public function checkToken($user_id,$user_token){
         $token = self::getApiToken($user_id);
+        //print_r($token) ;
         if($token){
             return $user_token == $token ? $user_id : -1;
         }
@@ -32,11 +33,11 @@ class ApiToken{
 
     static public function getApiToken($user_id){
 
-        $cache_key = self::getCacheKey($user_id);
+        /*$cache_key = self::getCacheKey($user_id);
         $token = cache($cache_key);
         if($token){
             return $token;
-        }
+        }*/
 
         $apptokenmodel = AppTokens::get($user_id);
         if(!$apptokenmodel){

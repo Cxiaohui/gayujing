@@ -40,9 +40,9 @@ class Me extends Common{
     public function test(){
 
         $post = [
-            'new_pwd'=>'222222',
-            'new_pwd2'=>'222222',
-            'old_pwd'=>'111111',
+            'new_pwd'=>'111111',
+            'new_pwd2'=>'111111',
+            'old_pwd'=>'222222',
         ];
         return $this->updatepwd($post);
     }

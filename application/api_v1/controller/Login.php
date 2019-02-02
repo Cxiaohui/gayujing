@@ -53,6 +53,12 @@ class Login extends Common{
             ]);
         }
 
+        /*print_r([
+            $pwd,
+            $user->logpwd,
+            $user->getPwd($pwd)
+        ]);*/
+
         if($user->logpwd != $user->getPwd($pwd)){
             $this->res([
                 'code'=>201,

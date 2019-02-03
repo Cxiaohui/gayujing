@@ -156,7 +156,7 @@ class Events extends Common{
 
         if(empty($post['people_list'])){
             return $this->res([
-                'code'=>202,
+                'code'=>200,
                 'msg'=>'保存信息成功'
             ]);
         }

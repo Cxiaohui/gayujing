@@ -16,10 +16,18 @@ class Login extends Common{
         parent::__construct(false);
     }
 
+    public function out(){
+        ApiToken::cleanApiToken($this->user_id);
+        return $this->res([
+            'code'=>200,
+            'msg'=>'退出成功'
+        ]);
+    }
+
     public function post(){
 
         if(!$this->request->isPost()){
-            $this->res([
+            return $this->res([
                 'code'=>201,
                 'msg'=>'访问错误'
             ]);
@@ -29,7 +37,7 @@ class Login extends Common{
         $pwd = $this->request->post('pwd','','trim');
 
         if(!$account || !$pwd){
-            $this->res([
+            return $this->res([
                 'code'=>201,
                 'msg'=>'请输入账号或密码'
             ]);
@@ -47,7 +55,7 @@ class Login extends Common{
         }
 
         if(!$user){
-            $this->res([
+            return $this->res([
                 'code'=>201,
                 'msg'=>'账号或密码不正确'
             ]);
@@ -60,7 +68,7 @@ class Login extends Common{
         ]);*/
 
         if($user->logpwd != $user->getPwd($pwd)){
-            $this->res([
+            return $this->res([
                 'code'=>201,
                 'msg'=>'账号或密码不正确.'
             ]);
@@ -70,7 +78,7 @@ class Login extends Common{
         $user_data['app_token'] = ApiToken::createSaveApiToken($user->id);
 
 
-        $this->res([
+        return $this->res([
             'code'=>200,
             'msg'=>'登录成功',
             'data'=>$user_data

@@ -1,0 +1,7 @@
+create table mytest(
+ id NUMBER PRIMARY KEY,
+ name VARCHAR(32) NOT NULL ,-- 姓名
+ age NUMBER(2) NOT NULL,-- 年龄
+ create_time TIMESTAMP NOT NULL
+);
+

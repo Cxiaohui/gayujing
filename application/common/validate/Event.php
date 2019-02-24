@@ -14,7 +14,7 @@ class Event extends Validate{
     protected $rule = [
         'post_user_id'=>'require',
         'group_name'=>'require',
-        'event_cate'=>'require',
+//        'event_cate'=>'require',
         'happen_time'=>'require',
         'address'=>'require',
         'people_number'=>'require',
@@ -25,7 +25,7 @@ class Event extends Validate{
     protected $message  =   [
         'post_user_id.require' => '上报者信息缺失',
         'group_name.require' => '涉及群体必须',
-        'event_cate.require' => '事件类别必须',
+//        'event_cate.require' => '事件类别必须',
         'happen_time.require' => '发生时间必须',
         'address.require' => '地点必须',
         'people_number.require' => '人数规模必须',

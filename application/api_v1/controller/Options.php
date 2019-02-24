@@ -22,11 +22,13 @@ class Options extends Common{
             'msg'=>'ok',
             'data'=>[
                 'gobeijing_path'=>config('gobeijing_path'),
-                'acttype_inbeijing'=>config('gobeijing_path'),
-                'gotype'=>config('gobeijing_path'),
-                'action_names'=>config('gobeijing_path'),
-                'event_groups'=>config('gobeijing_path'),
-                'event_cates'=>config('gobeijing_path'),
+                'acttype_inbeijing'=>config('acttype_inbeijing'),
+                'gotype'=>config('gotype'),
+                'action_names'=>config('action_names'),
+                'event_groups'=>config('event_groups'),
+                'event_cates'=>config('event_cates'),
+                'people_nums'=>config('people_nums'),
+                'raodaos'=>config('raodaos'),
             ]
         ]);
 

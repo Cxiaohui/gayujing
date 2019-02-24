@@ -20,6 +20,10 @@ class Record extends Common{
 
     public function index(){
 
+
+        $begin_time = $this->request->post("begin_time",'');
+        $end_time = $this->request->post("end_time",'');
+
         $where = '';
 
         if($this->cur_user['utype']==3){

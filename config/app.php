@@ -143,4 +143,12 @@ return [
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle'       => '',
 
+    //
+    'qiniu'=>[
+        'host'=>'http://pnd68waxi.bkt.clouddn.com/',
+        'AccessKey'=>'u1HmuhmWybxKhcwINFwF_rHm7IbJFv6PJtKlXr_v',
+        'SecretKey'=>'nnPRgLlGosEVkxkFqsnnNHiPISH9_jYW008wjpcQ',
+        'file_key_prefix'=>'gayujing/',
+        'bucket1'=>'gayijing'
+    ],
 ];

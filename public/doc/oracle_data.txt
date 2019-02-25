@@ -1,7 +1,44 @@
-create table mytest(
+create table mytest2(
  id NUMBER PRIMARY KEY,
- name VARCHAR(32) NOT NULL ,-- 姓名
- age NUMBER(2) NOT NULL,-- 年龄
- create_time TIMESTAMP NOT NULL
+ name VARCHAR(32) NOT NULL ,
+ age NUMBER(2) NOT NULL,
+ create_time TIMESTAMP DEFAULT(SYSTIMESTAMP)  NULL
 );
+-- 系统使用用户表
+create table "GAUSER".ga_sysusers(
+id NUMBER NOT NULL PRIMARY KEY,
+status NUMBER(1) DEFAULT('1') NULL,
+name varchar(32) DEFAULT('') NULL,
+gender NUMBER(1) DEFAULT('0') NULL ,
+mobile varchar(16) DEFAULT('') NULL,
+education varchar(16) DEFAULT('') NULL,
+logaccount varchar(32) DEFAULT('') NULL,
+logpwd varchar(32) DEFAULT('') NULL,
+logstat varchar(10) DEFAULT('') NULL ,
+headpic varchar(125) DEFAULT('') NULL,
+province_id NUMBER DEFAULT('0') NULL ,
+province varchar(32) DEFAULT('') NULL,
+city_id NUMBER DEFAULT('0') NULL,
+city varchar(32) DEFAULT('') NULL,
+county_id NUMBER DEFAULT('0') NULL,
+county varchar(32) DEFAULT('') NULL,
+district_id NUMBER DEFAULT('0') NULL,
+district varchar(32) DEFAULT('') NULL,
+isdel  NUMBER(1) DEFAULT('0') NULL,
+create_time TIMESTAMP DEFAULT(current_timestamp) NULL,
+update_time TIMESTAMP DEFAULT(current_timestamp) NULL
+);
+-- `utype` tinyint(4) DEFAULT '3' COMMENT '类别:1超级,2浏览,3个人',
+alter table "GAUSER"."GA_SYSUSERS" add (utype number(1) default('3') not null);
 
+-- 字段注释
+COMMENT ON TABLE "GAUSER"."GA_SYSUSERS" IS '系统使用用户表';
+COMMENT ON COLUMN "GAUSER"."GA_SYSUSERS"."STATUS" IS '账号状态';
+COMMENT ON COLUMN "GAUSER"."GA_SYSUSERS"."NAME" IS '姓名';
+COMMENT ON COLUMN "GAUSER"."GA_SYSUSERS"."GENDER" IS '性别：0未知，1男，2女';
+COMMENT ON COLUMN "GAUSER"."GA_SYSUSERS"."MOBILE" IS '手机号';
+COMMENT ON COLUMN "GAUSER"."GA_SYSUSERS"."EDUCATION" IS '学历';
+COMMENT ON COLUMN "GAUSER"."GA_SYSUSERS"."LOGACCOUNT" IS '登录账号';
+COMMENT ON COLUMN "GAUSER"."GA_SYSUSERS"."ISDEL" IS '删除标记：0否，1是';
+--主键自增序列
+CREATE SEQUENCE ga_sysusers_seq  INCREMENT BY 1 START WITH 1 NOMAXVALUE NOCYCLE NOCACHE;

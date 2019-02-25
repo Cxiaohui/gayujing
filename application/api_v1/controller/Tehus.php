@@ -37,13 +37,18 @@ class Tehus extends Common{
                 'msg'=>'该信息不存在或被删除'
             ]);
         }
+        $info = $tehuworks->toArray();
+        $info['xinfang_idcardpic0'] = qnimg($info['xinfang_idcardpic0']);
+        $info['xinfang_idcardpic1'] = qnimg($info['xinfang_idcardpic1']);
+        $info['tongxi_idcardpic0'] = qnimg($info['tongxi_idcardpic0']);
+        $info['tongxi_idcardpic1'] = qnimg($info['tongxi_idcardpic1']);
 
         return $this->res([
             'code'=>200,
             'msg'=>'ok',
             'data'=>[
                 //'user'=>$tehuworks->sysuser()->field('id,name')->find(),
-                'info'=>$tehuworks->toArray()
+                'info'=>$info
             ]
         ]);
     }
@@ -71,6 +76,30 @@ class Tehus extends Common{
             'find_time'=>null,
             'content'=>'我要上报我要上报我要上报我要上报我要上报我要上报我要上报我要上报我要上报',
         ];
+
+        $post = [
+            'xinfang_name' => '312',
+    'xinfang_idnumber' => '3123',
+    'xinfang_mobile' => '3123',
+    'xinfang_idcardpic0' => 'gaqn/id/201902241557220.jpg',
+        'xinfang_idcardpic1' => 'gaqn/id/201902241557260.jpg',
+        'tongxi_name' => '哦请问哦请问',
+        'tongxi_idnumber' => '123123131',
+    'tongxi_mobile' => '31231',
+    'tongxi_idcardpic0' => 'gaqn/id/201902241557460.jpg',
+        'tongxi_idcardpic1' => 'gaqn/id/201902241557500.jpg',
+        'gobeijing_path_id' => 3,
+    'gobeijing_path' => '自驾车',
+        'gobeijing_type_id' => '到市上访',
+        'gobeijing_type' => '到市上访',
+        'acttype_inbeijing_id' => 2,
+    'acttype_inbeijing' => '北京分流',
+        'address_inbeijing' => '3123123',
+    'lost_time' => '2019-02-24',
+    'find_time' => '2019-02-24'
+        ];
+
+
         $this->post($post);
     }
 
@@ -94,6 +123,8 @@ class Tehus extends Common{
                 'msg'=>'访问错误'
             ]);
         }
+
+        \app\common\library\Mylog::write($post,'tehus_data');
 
         $post['post_user_id'] = $this->user_id;
 
@@ -159,7 +190,7 @@ class Tehus extends Common{
             $tehuworks->find_time = $post['find_time'];
         }
 
-        $tehuworks->content = $post['content'];
+        $tehuworks->content = isset($post['content']) ? $post['content'] : '';
 
 
         $res = $tehuworks->save();

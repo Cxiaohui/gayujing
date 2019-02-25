@@ -1,28 +1,29 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
-//mcdataroot
-//qDehF3qw6Grs0HdfJ
+/**
+ * Created by PhpStorm.
+ * User: chenxh
+ * Date: 2019/2/19
+ * Time: 18:29
+ */
 return [
     // 数据库类型
-    'type'            => 'mysql',
+    'type'            => '\think\oracle\Connection',
     // 服务器地址
-    'hostname'        => 'rm-wz9wg8c638x6se200vo.mysql.rds.aliyuncs.com',
+    'hostname'        => 'localhost',
     // 数据库名
-    'database'        => 'ga_yujing',
+    'database'        => 'xe',
     // 用户名
-    'username'        => 'gayujinguser',//
+    //GAUSER/renmingga
+    //SYSTEM/12345678
+    'username'        => 'GAUSER',//
+//    'username'        => 'SYSTEM',//
+//    'username'        => 'SYSDBA',//
     // 密码
-    'password'        => 'ieWw0sJd7dNmc',//
+    'password'        => 'renmingga',//
+//    'password'        => '12345678',//
+//    'password'        => 'oracle',//
     // 端口
-    'hostport'        => '',
+    'hostport'        => '49161',
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数
@@ -30,7 +31,7 @@ return [
     // 数据库编码默认采用utf8
     'charset'         => 'utf8',
     // 数据库表前缀
-    'prefix'          => 'ga_',
+    'prefix'          => 'GA_',
     // 数据库调试模式
     'debug'           => true,
     // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)

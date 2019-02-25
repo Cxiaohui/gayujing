@@ -17,13 +17,13 @@ use think\image\Exception,
 class Qiniu{
 
     static public function save_new_img($w_url){
-        $savename = explode('-',str_replace(config('qiniu.host'),'',$w_url))[0].'-'.md5($w_url).'.jpg';
+        $savename = explode('-',str_replace(config('app.qiniu.host'),'',$w_url))[0].'-'.md5($w_url).'.jpg';
         return self::fop_save($w_url,$savename);
     }
     static public function fop_save($w_url,$savename){
         try{
 
-            $qn = config('qiniu');
+            $qn = config('app.qiniu');
 
             $auth = new Auth($qn['AccessKey'],$qn['SecretKey']);
 
@@ -65,15 +65,15 @@ class Qiniu{
     static public function delete_file($file_key,$bucket=null){
 
         if(strpos($file_key,'http')!==false){
-            $file_key = str_replace('http://'.config('qiniu.host').'/','',$file_key);
+            $file_key = str_replace('http://'.config('app.qiniu.host').'/','',$file_key);
         }
 
         //BucketManager
-        $auth = new Auth(config('qiniu.AccessKey'),config('qiniu.SecretKey'));
+        $auth = new Auth(config('app.qiniu.AccessKey'),config('app.qiniu.SecretKey'));
         $config = new QConfig();
         $manager = new BucketManager($auth,$config);
         if(!$bucket){
-            $bucket = config('qiniu.bucket1');
+            $bucket = config('app.qiniu.bucket1');
         }
         $error = $manager->delete($bucket,$file_key);
         //var_dump($error);
@@ -90,15 +90,18 @@ class Qiniu{
         }
         $src = $res['true_path'];
         $dtx = pathinfo($src, PATHINFO_EXTENSION);
-        $q_key = config('qiniu.file_key_prefix').$res['dir'].md5($src).'.'.$dtx;
+        $q_key = config('app.qiniu.file_key_prefix').$res['dir'].md5($src).'.'.$dtx;
 
         //echo $src,'----',$q_key;
-        return self::upload_file(config('qiniu.bucket1'),$src,$q_key);
+        return self::upload_file(config('app.qiniu.bucket1'),$src,$q_key);
     }
 
     static public function get_uptoken($bucket,$expires = 7200,$policy = null){
-        $auth = new Auth(config('qiniu.AccessKey'),config('qiniu.SecretKey'));
-        $cache_key = config('cache_key.qiniu_uptoken');
+
+        $config = config('app.qiniu');
+
+        $auth = new Auth($config['AccessKey'],$config['SecretKey']);
+        $cache_key = config('app.cache_key.qiniu_uptoken');
         $token = cache($cache_key);
         if($token){
             return $token;
@@ -126,7 +129,7 @@ class Qiniu{
     }
 
     static public function download_file($qiniu_key,$save_name=''){
-        $url = config('qiniu.host').$qiniu_key;
+        $url = config('app.qiniu.host').$qiniu_key;
         if($save_name==''){
             $save_name = './data/'.$qiniu_key;
         }
@@ -156,7 +159,7 @@ class Qiniu{
         if(strpos($src,'mcdocs')===false){
             return false;
         }
-        $q_host = config('qiniu.host');
+        $q_host = config('app.qiniu.host');
         if(strpos($src,$q_host)===false){
             $src = $q_host.$src;
         }
@@ -194,7 +197,7 @@ class Qiniu{
 
     static public function download_upload_watermark($wurl){
         try{
-            $path = './data/'.str_replace(config('qiniu.host'),'',substr($wurl,0,strrpos($wurl,'?')));
+            $path = './data/'.str_replace(config('app.qiniu.host'),'',substr($wurl,0,strrpos($wurl,'?')));
             //echo $path;
             $pathinfo = pathinfo($path);
 
@@ -216,7 +219,7 @@ class Qiniu{
 
             if(file_exists($save_name)){
                 $q_key = str_replace('./data/','',$save_name);
-                self::upload_file(config('qiniu.bucket1'),$save_name,$q_key);
+                self::upload_file(config('app.qiniu.bucket1'),$save_name,$q_key);
 
                 return $q_key;
             }

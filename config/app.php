@@ -148,7 +148,14 @@ return [
         'host'=>'http://pnd68waxi.bkt.clouddn.com/',
         'AccessKey'=>'u1HmuhmWybxKhcwINFwF_rHm7IbJFv6PJtKlXr_v',
         'SecretKey'=>'nnPRgLlGosEVkxkFqsnnNHiPISH9_jYW008wjpcQ',
-        'file_key_prefix'=>'gayujing/',
+        'file_key_prefix'=>'gaqn/',
         'bucket1'=>'gayijing'
+    ],
+
+    'cache_key'=>[
+        'api_log_token'=>'apiLoginToken:',
+        'api_team'=>'mc_teams',
+        'mobile_verify_code'=>'mobile_verify_code:',
+        'qiniu_uptoken'=>'qiniu_uptoken'
     ],
 ];

@@ -17,7 +17,9 @@ class Mylog{
         if(!is_string($mseg)){
             $mseg = json_encode($mseg);
         }
-        $path = LOG_PATH.$fname;
+
+        $path = APP_PATH.'/runtime/log/'.$fname;
+//        echo $path;exit;
         if(!is_dir($path)){
             mkdir($path,0777,true);
         }

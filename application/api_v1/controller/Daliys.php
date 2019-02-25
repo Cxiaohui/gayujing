@@ -40,15 +40,34 @@ class Daliys extends Common{
                 'msg'=>'该信息不存在或被删除'
             ]);
         }
+        $info = $daliyworks->toArray();
+        $info['people_idcardpic0'] = qnimg($info['people_idcardpic0']);
+        $info['people_idcardpic1'] = qnimg($info['people_idcardpic1']);
+        $live_photos = $daliyworks->photos()->field('id,path')->where('type','=',1)->order('sort asc')->select();
+
+        if(!empty($live_photos)){
+            foreach($live_photos as $k=>$ph){
+                $live_photos[$k]['file_url'] = qnimg($ph['path']);
+            }
+        }
+
+        $life_photos = $daliyworks->photos()->field('id,path')->where('type','=',2)->order('sort asc')->select();
+
+        if(!empty($life_photos)){
+            foreach($life_photos as $sk=>$sph){
+                $life_photos[$sk]['file_url'] = qnimg($sph['path']);
+            }
+        }
+
 
         return $this->res([
             'code'=>200,
             'msg'=>'ok',
             'data'=>[
-                'info'=>$daliyworks->toArray(),
+                'info'=>$info,
 //                'user'=>$daliyworks->sysuser()->field('id,name')->find(),
-                'live_photos'=>$daliyworks->photos()->field('id,path')->where('type','=',1)->order('sort asc')->select(),
-                'life_photos'=>$daliyworks->photos()->field('id,path')->where('type','=',2)->order('sort asc')->select(),
+                'live_photos'=>$live_photos,
+                'life_photos'=>$life_photos,
 
             ]
         ]);
@@ -80,6 +99,26 @@ class Daliys extends Common{
                 ['id'=>0,'src'=>'life_photos-33'],
             ]
         ];
+
+
+        $post = [
+            'people_name' => '31212313',
+    'people_idnumber' => '31231231',
+    'people_mobile' => '31231231',
+    'people_idcardpic0' => 'gongan/id/201902241254200.jpg',
+        'people_idcardpic1' => 'gongan/id/201902241254250.jpg',
+        'content' => '31231',
+    'gobeijing_path_id' => 3,
+    'gobeijing_path' => '自驾车',
+        'gotype_id' => 2,
+    'gotype' =>'赴省上访',
+        'action_name_id' => 1,
+    'action_name' => '外围查找',
+        'action_desn' => '哦请问哦请问',
+        'work_content' => '哦请问哦去',
+        'live_photos' => '[{"id":"0","live_photo":"gongan/work/201902241254530.jpg"},{"id":"0","live_photo":"gongan/work/201902241254531.jpg"},{"id":"0","live_photo":"gongan/work/201902241254533.jpg"},{"id":"0","live_photo":"gongan/work/201902241254532.jpg"}]',
+    'life_photos' => '[{"id":"0","life_photo":"gongan/life/201902241255001.jpg"},{"id":"0","life_photo":"gongan/life/201902241255000.jpg"},{"id":"0","life_photo":"gongan/life/201902241255003.jpg"},{"id":"0","life_photo":"gongan/life/201902241255002.jpg"}]'
+        ];
         return $this->post($post);
     }
 
@@ -103,6 +142,8 @@ class Daliys extends Common{
                 'msg'=>'访问错误'
             ]);
         }
+
+        \app\common\library\Mylog::write($post,'daliys_data');
 
         $post['post_user_id'] = $this->user_id;
         $daliyworkValidate = new DaliyworkValidate();

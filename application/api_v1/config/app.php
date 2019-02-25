@@ -6,7 +6,7 @@
  * Time: 23:00
  */
 return [
-    'is_test' => true,
+    'is_test' => false,
     'default_return_type'    => 'json',
     //
     'api_cache_key'=>[

@@ -6,7 +6,10 @@ class Index extends Controller
 {
     public function index()
     {
-        return 'o';
+        print_r([
+            config('app.qiniu.host'),
+        ]) ;
+        return '0';
     }
     public function sfds()
     {
@@ -23,7 +26,7 @@ class Index extends Controller
 
         $itime = '2019-02-23';
 
-        
+
 
     }
 

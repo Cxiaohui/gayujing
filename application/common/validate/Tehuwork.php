@@ -30,7 +30,7 @@ class Tehuwork extends Validate{
         'address_inbeijing'=>'require',
 //        'lost_time'=>'require',
 //        'find_time'=>'require',
-        'content'=>'require',
+//        'content'=>'require',
     ];
     protected $message  =   [
         'post_user_id.require' => '上报者信息缺失',
@@ -56,7 +56,7 @@ class Tehuwork extends Validate{
 
 //        'lost_time.require'  => '失联时间必须',
 //        'find_time.require'  => '找到时间必须',
-        'content.require'  => '上访诉求必须'
+//        'content.require'  => '上访诉求必须'
     ];
 
     /*protected $scene = [

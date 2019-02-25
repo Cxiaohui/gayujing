@@ -33,3 +33,7 @@ function tostring($data){
     }
     return $data;
 }
+
+function qnimg($src){
+    return config('app.qiniu.host').$src;
+}

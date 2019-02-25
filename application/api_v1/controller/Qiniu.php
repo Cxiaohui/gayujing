@@ -10,7 +10,10 @@ class Qiniu extends Common{
 
 
     public function token(){
-        $uptoken = \app\common\library\Qiniu::get_uptoken(config('qiniu.bucket1'));
+
+        $config = config('app.qiniu');
+
+        $uptoken = \app\common\library\Qiniu::get_uptoken($config['bucket1']);
 
 
         return $this->res([
@@ -18,7 +21,8 @@ class Qiniu extends Common{
             'msg'=>'ok',
             'data'=>[
                 'uptoken'=>$uptoken,
-                'bucket'=>config('qiniu.bucket1')
+//                'qiniu'=>config('qiniu'),
+                'bucket'=>$config['bucket1']
             ]
         ]);
 

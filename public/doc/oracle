@@ -47,6 +47,9 @@ GRANT DBA TO gauser;
 
 
 ------------
+删除序列的SQL
+DROP SEQUENCE seq_newsId；
+
 1)查看表空间大小
 
     表空间总大小：

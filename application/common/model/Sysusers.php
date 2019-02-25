@@ -47,7 +47,7 @@ class Sysusers extends ModelBase{
             'gender'=>$this->gender,
             'mobile'=>$this->mobile,
             'education'=>$this->education,
-            'headpic'=>$this->headpic,
+            'headpic'=>qnimg($this->headpic),
             'logaccount'=>$this->logaccount,
         ];
     }

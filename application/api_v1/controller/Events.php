@@ -39,11 +39,20 @@ class Events extends Common{
             ]);
         }
 
+        $info = $event->toArray();
+        $peoples = $event->peopleList;
+
+        /*if(!empty($peoples)){
+            foreach($peoples as $k=>$peo){
+                $peoples['']
+            }
+        }*/
+
         return $this->res([
             'code'=>200,
             'msg'=>'ok',
             'data'=>[
-                'info'=>$event->toArray(),
+                'info'=>$info,
 //                'user'=>$daliyworks->sysuser()->field('id,name')->find(),
                 'peoples'=>$event->peopleList
             ]
@@ -93,6 +102,8 @@ class Events extends Common{
                 'msg'=>'访问错误'
             ]);
         }
+
+        \app\common\library\Mylog::write($post,'events_data');
         /*if(is_string($post['people_list'])){
             $post['people_list'] = json_decode($post['people_list'],1);
         }

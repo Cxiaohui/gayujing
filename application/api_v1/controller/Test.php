@@ -15,6 +15,8 @@ class Test extends Common{
     {
         parent::__construct(true);
     }
+
+
     public function addSysuser(){
 
         $sysuser = new Sysusers();
@@ -40,7 +42,7 @@ class Test extends Common{
     }
 
     public function t1(){
-
+        \app\common\library\Mylog::write('ssssss','test');exit;
         $post = [
             'group_name'=>2
         ];

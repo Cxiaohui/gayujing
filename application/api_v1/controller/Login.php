@@ -17,6 +17,9 @@ class Login extends Common{
     }
 
     public function out(){
+
+        $this->checkAppSafe();
+
         ApiToken::cleanApiToken($this->user_id);
         return $this->res([
             'code'=>200,

@@ -95,7 +95,8 @@ class Tehus extends Common{
         'tongxi_idcardpic1' => 'gaqn/id/201902241557500.jpg',
         'gobeijing_path_id' => 3,
     'gobeijing_path' => '自驾车',
-        'gobeijing_type_id' => '到市上访',
+        'gobeijing_type_id' => 2,
+        'raodao_id' => 2,
         'gobeijing_type' => '到市上访',
         'acttype_inbeijing_id' => 2,
     'acttype_inbeijing' => '北京分流',
@@ -129,7 +130,7 @@ class Tehus extends Common{
             ]);
         }
 
-        \app\common\library\Mylog::write($post,'tehus_data');
+//        \app\common\library\Mylog::write($post,'tehus_data');
 
         $post['post_user_id'] = $this->user_id;
 
@@ -164,21 +165,46 @@ class Tehus extends Common{
         }
 
         $kvname = function($key,$kv_key) use ($post){
-
-            if(is_numeric($post[$key])){
-                $gnamekv = config($kv_key);
-                return isset($gnamekv[$post[$key]]) ? $gnamekv[$post[$key]] : '';
+            $id_key = $key.'_id';
+            if(!isset($post[$key]) && !isset($post[$id_key])){
+                return [0,''];
             }
-            return $post[$key];
+
+            $gnamekv = config($kv_key);
+
+            if(isset($post[$id_key]) && isset($gnamekv[$post[$id_key]])){
+
+                return [$post[$id_key],$gnamekv[$post[$id_key]]];
+
+            }elseif(is_numeric($post[$key])){
+
+                return isset($gnamekv[$post[$key]]) ? [$post[$key],$gnamekv[$post[$key]]] : [0,''];
+            }
+
+            return [0,$post[$key]];
         };
+        //进京途径
+        $gobeijing_path = $kvname('gobeijing_path','gobeijing_path_kv');
+        $tehuworks->gobeijing_path_id = $gobeijing_path[0];
+        $tehuworks->gobeijing_path = $gobeijing_path[1];
+        //进京方式
+        $gobeijing_type = $kvname('gobeijing_type','gobeijing_types_kv');
+        $tehuworks->gobeijing_type_id = $gobeijing_type[0];
+        $tehuworks->gobeijing_type = $gobeijing_type[1];
+        //绕道
+        $raodao = $kvname('raodao','raodaos_kv');
+        $tehuworks->raodao_id = $raodao[0];
+        $tehuworks->raodao = $raodao[1];
 
-
-        $tehuworks->gobeijing_path = $kvname('gobeijing_path','gobeijing_path_kv');//$post['gobeijing_path'];
-        $tehuworks->gobeijing_type = $post['gobeijing_type'];
+        //在京行为类型
+        $acttype_inbeijing = $kvname('acttype_inbeijing','acttype_inbeijing_kv');
+        $tehuworks->acttype_inbeijing_id = $acttype_inbeijing[0];
+        $tehuworks->acttype_inbeijing = $acttype_inbeijing[1];
 
         $tehuworks->tongxi_name = $post['tongxi_name'];
         $tehuworks->tongxi_idnumber = $post['tongxi_idnumber'];
         $tehuworks->tongxi_mobile = $post['tongxi_mobile'];
+
         if(isset($post['tongxi_idcardpic0'])){
             $tehuworks->tongxi_idcardpic0 = $post['tongxi_idcardpic0'];
         }
@@ -186,7 +212,6 @@ class Tehus extends Common{
             $tehuworks->tongxi_idcardpic1 = $post['tongxi_idcardpic1'];
         }
 
-        $tehuworks->acttype_inbeijing = $kvname('acttype_inbeijing','acttype_inbeijing_kv');//$post['acttype_inbeijing'];
         $tehuworks->address_inbeijing = $post['address_inbeijing'];
         if($post['lost_time']){
             $tehuworks->lost_time = $post['lost_time'];

@@ -69,17 +69,19 @@ class Events extends Common{
         $post = [
             'id'=>1,
             'type'=>1,
+            'group_name_id'=>3,
             'group_name'=>'军队退役人员',
+            'event_cate_id'=>2,
             'event_cate'=>'极端行为',
             'happen_time'=>date('Y-m-d H:i:s'),
             'address'=>'在那很远的地方',
-            'people_number'=>'20-50人',
+            'people_number'=>2,
             'content'=>'闲的没事干',
             'do_unit_name'=>'那个单位的',
             'people_list'=>[
-                ['id'=>1,'name'=>'王五5','idnumber'=>'5555555555','mobile'=>'1115555'],
-                ['id'=>2,'name'=>'赵六6','idnumber'=>'66666666','mobile'=>'1116666'],
-                ['id'=>3,'name'=>'胡八8','idnumber'=>'8888888888','mobile'=>'1118888'],
+                ['id'=>0,'name'=>'王五5','idnumber'=>'5555555555','mobile'=>'1115555'],
+                ['id'=>0,'name'=>'赵六6','idnumber'=>'66666666','mobile'=>'1116666'],
+                ['id'=>0,'name'=>'胡八8','idnumber'=>'8888888888','mobile'=>'1118888'],
             ]
         ];
 
@@ -108,7 +110,7 @@ class Events extends Common{
             ]);
         }
 
-        \app\common\library\Mylog::write($post,'events_data');
+//        \app\common\library\Mylog::write($post,'events_data');
         /*if(is_string($post['people_list'])){
             $post['people_list'] = json_decode($post['people_list'],1);
         }
@@ -133,22 +135,44 @@ class Events extends Common{
 
 
         $kvname = function($key,$kv_key) use ($post){
+            $id_key = $key.'_id';
 
-            if(is_numeric($post[$key])){
-                $gnamekv = config($kv_key);
-                return isset($gnamekv[$post[$key]]) ? $gnamekv[$post[$key]] : '';
+            if(!isset($post[$key]) && !isset($post[$id_key])){
+                return [0,''];
             }
-            return $post[$key];
+
+            $gnamekv = config($kv_key);
+
+            if(isset($post[$id_key]) && isset($gnamekv[$post[$id_key]])){
+
+                return [$post[$id_key],$gnamekv[$post[$id_key]]];
+
+            }elseif(is_numeric($post[$key])){
+
+                return isset($gnamekv[$post[$key]]) ? [$post[$key],$gnamekv[$post[$key]]] : [0,''];
+            }
+
+            return [0,$post[$key]];
         };
 
         $event->post_user_id = $this->user_id;
         $event->status = $status;
         $event->type = $post['type'];
-        $event->group_name = $kvname('group_name','event_groups_kv');
-        $event->event_cate = $kvname('event_cate','event_cates_kv');
+        //涉及人群处
+        $group_name = $kvname('group_name','event_groups_kv');
+        $event->group_name_id = $group_name[0];
+        $event->group_name = $group_name[1];
+        //事件类别处
+        $event_cate = $kvname('event_cate','event_cates_kv');
+        $event->event_cate_id = $event_cate[0];
+        $event->event_cate = $event_cate[1];
+        //人数规模处
+        $people_number = $kvname('people_number','people_nums_kv');
+        $event->people_number_id = $people_number[0];
+        $event->people_number = $people_number[1];
+
         $event->happen_time = $post['happen_time'];
         $event->address = $post['address'];
-        $event->people_number = $post['people_number'];
         $event->content = $post['content'];
         $event->do_unit_name = isset($post['do_unit_name'])?$post['do_unit_name']:'';
 

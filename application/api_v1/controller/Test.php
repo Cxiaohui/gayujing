@@ -13,7 +13,7 @@ class Test extends Common{
 
     public function __construct($need_check=false)
     {
-        parent::__construct(true);
+        parent::__construct(false);
     }
 
 
@@ -22,11 +22,11 @@ class Test extends Common{
         $sysuser = new Sysusers();
 
         $data = [
-            'name'=>'测试员1',
-            'mobile'=>'13322223333',
-            'logaccount'=>'testman1',
+            'name'=>'王柳权',
+            'mobile'=>'13355556666',
+            'logaccount'=>'testman2',
             'logpwd'=>'111111',
-            'type'=>3,
+            'utype'=>2,
             'logstat'=>$sysuser->getLogstat()
         ];
 

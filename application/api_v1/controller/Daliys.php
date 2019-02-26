@@ -117,14 +117,19 @@ class Daliys extends Common{
         'content' => '31231',
     'gobeijing_path_id' => 3,
     'gobeijing_path' => '自驾车',
-        'gotype_id' => 2,
-    'gotype' =>'赴省上访',
+        'gotype_id' => 1,
+    'gotype' =>'直达',
         'action_name_id' => 1,
-    'action_name' => '外围查找',
+            'action_name'=>'扬言报复',
+            'xinfang_type_id'=>1,
+            'xinfang_type'=>'sdf',
+    'suqiu_type_id' => 2,
+            'gobeijing_act_id'=>1,
+            'suqiu_content'=>'上访诉求',
         'action_desn' => '哦请问哦请问',
         'work_content' => '哦请问哦去',
-        'live_photos' => '[{"id":"0","live_photo":"gongan/work/201902241254530.jpg"},{"id":"0","live_photo":"gongan/work/201902241254531.jpg"},{"id":"0","live_photo":"gongan/work/201902241254533.jpg"},{"id":"0","live_photo":"gongan/work/201902241254532.jpg"}]',
-    'life_photos' => '[{"id":"0","life_photo":"gongan/life/201902241255001.jpg"},{"id":"0","life_photo":"gongan/life/201902241255000.jpg"},{"id":"0","life_photo":"gongan/life/201902241255003.jpg"},{"id":"0","life_photo":"gongan/life/201902241255002.jpg"}]'
+        'live_photos' => '[{"id":"0","src":"gongan/work/201902241254530.jpg"},{"id":"0","src":"gongan/work/201902241254531.jpg"},{"id":"0","src":"gongan/work/201902241254533.jpg"},{"id":"0","src":"gongan/work/201902241254532.jpg"}]',
+    'life_photos' => '[{"id":"0","src":"gongan/life/201902241255001.jpg"},{"id":"0","src":"gongan/life/201902241255000.jpg"},{"id":"0","src":"gongan/life/201902241255003.jpg"},{"id":"0","src":"gongan/life/201902241255002.jpg"}]'
         ];
         return $this->post($post);
     }
@@ -150,7 +155,7 @@ class Daliys extends Common{
             ]);
         }
 
-        \app\common\library\Mylog::write($post,'daliys_data');
+//        \app\common\library\Mylog::write($post,'daliys_data');
 
         $post['post_user_id'] = $this->user_id;
         $daliyworkValidate = new DaliyworkValidate();
@@ -182,21 +187,68 @@ class Daliys extends Common{
         }
 
         $kvname = function($key,$kv_key) use ($post){
-
-            if(is_numeric($post[$key])){
-                $gnamekv = config($kv_key);
-                return isset($gnamekv[$post[$key]]) ? $gnamekv[$post[$key]] : '';
+            $id_key = $key.'_id';
+            if(!isset($post[$key]) && !isset($post[$id_key])){
+                return [0,''];
             }
-            return $post[$key];
-        };
 
-        $daliyworks->gobeijing_path = $kvname('gobeijing_path','gobeijing_path_kv');//$post['gobeijing_path'];
+
+            $gnamekv = config($kv_key);
+
+            if(isset($post[$id_key]) && isset($gnamekv[$post[$id_key]])){
+
+                return [$post[$id_key],$gnamekv[$post[$id_key]]];
+
+            }elseif(is_numeric($post[$key])){
+
+                return isset($gnamekv[$post[$key]]) ? [$post[$key],$gnamekv[$post[$key]]] : [0,''];
+            }
+
+            return [0,$post[$key]];
+        };
+        //进京途径
+        $gobj_path = $kvname('gobeijing_path','gobeijing_path_kv');
+        $daliyworks->gobeijing_path_id = $gobj_path[0];
+        $daliyworks->gobeijing_path = $gobj_path[1];
+        //进京方式
+        $gotype = $kvname('gotype','gobeijing_types_kv');
+        $daliyworks->gotype_id = $gotype[0];
+        $daliyworks->gotype = $gotype[1];
+        //绕道
+        $raodao = $kvname('raodao','raodaos_kv');
+        $daliyworks->raodao_id = $raodao[0];
+        $daliyworks->raodao = $raodao[1];
+
+        //过激行为
+        $action_name = $kvname('action_name','action_names_kv');
+        $daliyworks->action_name_id = $action_name[0];
+        $daliyworks->action_name = $action_name[1];
+        //信访诉求
+        $suqiu_type = $kvname('suqiu_type','suqiu_types_kv');
+
+        $daliyworks->suqiu_type_id = $suqiu_type[0];
+        $daliyworks->suqiu_type = $suqiu_type[1];
+        //信访行为
+        $xinfang_type = $kvname('xinfang_type','gotype_kv');
+        //print_r($xinfang_type);exit;
+        $daliyworks->xinfang_type_id = $xinfang_type[0];
+        $daliyworks->xinfang_type = $xinfang_type[1];
+        //进京行为类型
+        $gobeijing_act = $kvname('gobeijing_act','acttype_inbeijing_kv');
+        $daliyworks->gobeijing_act_id = $gobeijing_act[0];
+        $daliyworks->gobeijing_act = $gobeijing_act[1];
+
+        //详细诉求
         $daliyworks->content = $post['content'];
-        $daliyworks->gotype = $kvname('gotype','gotype_kv');//$post['gotype'];
-        $daliyworks->action_name = $kvname('action_name','action_names_kv');//$post['action_name'];
+        //上访诉求
+        $daliyworks->suqiu_content = $post['suqiu_content'];
+        //行为描述
         $daliyworks->action_desn = $post['action_desn'];
+        //走访工作
         $daliyworks->work_content = $post['work_content'];
 
+
+        //exit;
         $res = $daliyworks->save();
 
         if(!$res && !$daliyworks->id){

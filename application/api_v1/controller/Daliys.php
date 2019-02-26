@@ -43,6 +43,13 @@ class Daliys extends Common{
         $info = $daliyworks->toArray();
         $info['people_idcardpic0'] = qnimg($info['people_idcardpic0']);
         $info['people_idcardpic1'] = qnimg($info['people_idcardpic1']);
+
+        $info['can_edit'] = 0;
+        if($info['post_user_id'] == $this->user_id){
+            $info['can_edit'] = 1;
+        }
+
+
         $live_photos = $daliyworks->photos()->field('id,path')->where('type','=',1)->order('sort asc')->select();
 
         if(!empty($live_photos)){

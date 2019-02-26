@@ -40,7 +40,12 @@ class Events extends Common{
         }
 
         $info = $event->toArray();
-        $peoples = $event->peopleList;
+        $info['can_edit'] = 0;
+        if($info['post_user_id'] == $this->user_id){
+            $info['can_edit'] = 1;
+        }
+
+//        $peoples = $event->peopleList;
 
         /*if(!empty($peoples)){
             foreach($peoples as $k=>$peo){

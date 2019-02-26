@@ -10,7 +10,7 @@ use think\Model;
 
 class Mytest extends Model{
 
-    protected $table = 'mytest';
+    protected $table = 'mytest2';
 
     protected $autoWriteTimestamp = false;
     protected $createTime = false;

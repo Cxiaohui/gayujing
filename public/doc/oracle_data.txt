@@ -7,28 +7,29 @@ create table mytest2(
 -- 系统使用用户表
 create table "GAUSER".ga_sysusers(
 id NUMBER NOT NULL PRIMARY KEY,
-status NUMBER(1) DEFAULT('1') NULL,
-name varchar(32) DEFAULT('') NULL,
-gender NUMBER(1) DEFAULT('0') NULL ,
-mobile varchar(16) DEFAULT('') NULL,
-education varchar(16) DEFAULT('') NULL,
-logaccount varchar(32) DEFAULT('') NULL,
-logpwd varchar(32) DEFAULT('') NULL,
-logstat varchar(10) DEFAULT('') NULL ,
-headpic varchar(125) DEFAULT('') NULL,
-province_id NUMBER DEFAULT('0') NULL ,
-province varchar(32) DEFAULT('') NULL,
-city_id NUMBER DEFAULT('0') NULL,
-city varchar(32) DEFAULT('') NULL,
-county_id NUMBER DEFAULT('0') NULL,
-county varchar(32) DEFAULT('') NULL,
-district_id NUMBER DEFAULT('0') NULL,
-district varchar(32) DEFAULT('') NULL,
-isdel  NUMBER(1) DEFAULT('0') NULL,
-create_time TIMESTAMP DEFAULT(current_timestamp) NULL,
-update_time TIMESTAMP DEFAULT(current_timestamp) NULL
+utype number(1) default('3') not null，
+status NUMBER(1) DEFAULT('1') NOT NULL,
+name varchar(32) DEFAULT('') NOT NULL,
+gender NUMBER(1) DEFAULT('0') NOT NULL ,
+mobile varchar(16) DEFAULT('') NOT NULL,
+education varchar(16) DEFAULT('') NOT NULL,
+logaccount varchar(32) DEFAULT('') NOT NULL,
+logpwd varchar(32) DEFAULT('') NOT NULL,
+logstat varchar(10) DEFAULT('') NOT NULL ,
+headpic varchar(125) DEFAULT('') NOT NULL,
+province_id NUMBER DEFAULT('0') NOT NULL ,
+province varchar(32) DEFAULT('') NOT NULL,
+city_id NUMBER DEFAULT('0') NOT NULL,
+city varchar(32) DEFAULT('') NOT NULL,
+county_id NUMBER DEFAULT('0') NOT NULL,
+county varchar(32) DEFAULT('') NOT NULL,
+district_id NUMBER DEFAULT('0') NOT NULL,
+district varchar(32) DEFAULT('') NOT NULL,
+isdel  NUMBER(1) DEFAULT('0') NOT NULL,
+create_time TIMESTAMP DEFAULT(current_timestamp) NOT NULL,
+update_time TIMESTAMP DEFAULT(current_timestamp) NOT NULL
 );
--- `utype` tinyint(4) DEFAULT '3' COMMENT '类别:1超级,2浏览,3个人',
+-- utype tinyint(4) DEFAULT '3' COMMENT '类别:1超级,2浏览,3个人',
 alter table "GAUSER"."GA_SYSUSERS" add (utype number(1) default('3') not null);
 
 -- 字段注释
@@ -42,3 +43,241 @@ COMMENT ON COLUMN "GAUSER"."GA_SYSUSERS"."LOGACCOUNT" IS '登录账号';
 COMMENT ON COLUMN "GAUSER"."GA_SYSUSERS"."ISDEL" IS '删除标记：0否，1是';
 --主键自增序列
 CREATE SEQUENCE ga_sysusers_seq  INCREMENT BY 1 START WITH 1 NOMAXVALUE NOCYCLE NOCACHE;
+
+
+-- 人员信息
+
+create table "GAUSER".ga_peoples(
+id NUMBER NOT NULL PRIMARY KEY,
+name varchar(32) DEFAULT('') NOT NULL,
+idnumber varchar(32) DEFAULT('') NOT NULL,
+mobile varchar(32) DEFAULT('') NOT NULL,
+idcardpic0 varchar(125) DEFAULT('') NOT NULL,
+idcardpic1 varchar(125) DEFAULT('') NOT NULL,
+create_time TIMESTAMP DEFAULT(current_timestamp) NOT NULL,
+update_time TIMESTAMP DEFAULT(current_timestamp) NOT NULL
+);
+
+
+-- 字段注释
+COMMENT ON TABLE "GAUSER"."GA_PEOPLES" IS '人员信息';
+COMMENT ON COLUMN "GAUSER"."GA_PEOPLES"."NAME" IS '姓名';
+COMMENT ON COLUMN "GAUSER"."GA_PEOPLES"."IDNUMBER" IS '身份证号';
+COMMENT ON COLUMN "GAUSER"."GA_PEOPLES"."MOBILE" IS '通讯号码';
+COMMENT ON COLUMN "GAUSER"."GA_PEOPLES"."IDCARDPIC0" IS '身份证正面照';
+COMMENT ON COLUMN "GAUSER"."GA_PEOPLES"."IDCARDPIC1" IS '身份证正面照';
+--主键自增序列
+CREATE SEQUENCE ga_peoples_seq  INCREMENT BY 1 START WITH 1 NOMAXVALUE NOCYCLE NOCACHE;
+
+
+
+
+
+-- 特护期工作表
+
+create table "GAUSER".ga_tehuworks(
+id NUMBER NOT NULL PRIMARY KEY,
+post_user_id NUMBER DEFAULT(0) NOT NULL,
+status NUMBER(2) DEFAULT(0) NOT NULL,
+xinfang_name varchar(32) DEFAULT('') NOT NULL,
+xinfang_idnumber varchar(32) DEFAULT('') NOT NULL,
+xinfang_mobile varchar(32) DEFAULT('') NOT NULL,
+xinfang_idcardpic0 varchar(125) DEFAULT('') NOT NULL,
+xinfang_idcardpic1 varchar(125) DEFAULT('') NOT NULL,
+tongxi_name varchar(32) DEFAULT('') NOT NULL,
+tongxi_idnumber varchar(32) DEFAULT('') NOT NULL,
+tongxi_mobile varchar(32) DEFAULT('') NOT NULL,
+tongxi_idcardpic0 varchar(125) DEFAULT('') NOT NULL,
+tongxi_idcardpic1 varchar(125) DEFAULT('') NOT NULL,
+gobeijing_path_id NUMBER DEFAULT(0) NOT NULL,
+gobeijing_path varchar(32) DEFAULT('') NOT NULL,
+gobeijing_type_id NUMBER DEFAULT(0) NOT NULL,
+gobeijing_type varchar(32) DEFAULT('') NOT NULL,
+acttype_inbeijing_id NUMBER DEFAULT(0) NOT NULL,
+acttype_inbeijing varchar(32) DEFAULT('') NOT NULL,
+address_inbeijing varchar(125) DEFAULT('') NOT NULL,
+lost_time TIMESTAMP DEFAULT(current_timestamp) NOT NULL,
+find_time TIMESTAMP DEFAULT(current_timestamp) NOT NULL,
+content varchar2(4000) DEFAULT('') NOT NULL,
+create_time TIMESTAMP DEFAULT(current_timestamp) NOT NULL,
+update_time TIMESTAMP DEFAULT(current_timestamp) NOT NULL,
+isdel NUMBER(1) DEFAULT('0') NOT NULL
+);
+
+-- index
+Create Index i_post_user_id on "GAUSER".ga_tehuworks(post_user_id);
+
+-- 字段注释
+COMMENT ON TABLE "GAUSER"."GA_TEHUWORKS" IS '特护期工作表';
+COMMENT ON COLUMN "GAUSER"."GA_TEHUWORKS"."STATUS" IS '状态';
+COMMENT ON COLUMN "GAUSER"."GA_TEHUWORKS"."XINFANG_NAME" IS '姓名';
+COMMENT ON COLUMN "GAUSER"."GA_TEHUWORKS"."XINFANG_IDNUMBER" IS '身份证号';
+COMMENT ON COLUMN "GAUSER"."GA_TEHUWORKS"."XINFANG_MOBILE" IS '通讯号码';
+COMMENT ON COLUMN "GAUSER"."GA_TEHUWORKS"."XINFANG_IDCARDPIC0" IS '身份证正面照';
+COMMENT ON COLUMN "GAUSER"."GA_TEHUWORKS"."XINFANG_IDCARDPIC1" IS '身份证反面照';
+COMMENT ON COLUMN "GAUSER"."GA_TEHUWORKS"."TONGXI_NAME" IS '同行人姓名';
+COMMENT ON COLUMN "GAUSER"."GA_TEHUWORKS"."TONGXI_IDNUMBER" IS '同行人身份证号';
+COMMENT ON COLUMN "GAUSER"."GA_TEHUWORKS"."TONGXI_MOBILE" IS '同行人通讯号码';
+COMMENT ON COLUMN "GAUSER"."GA_TEHUWORKS"."TONGXI_IDCARDPIC0" IS '同行人身份证正面照';
+COMMENT ON COLUMN "GAUSER"."GA_TEHUWORKS"."TONGXI_IDCARDPIC1" IS '同行人身份证反面照';
+COMMENT ON COLUMN "GAUSER"."GA_TEHUWORKS"."GOBEIJING_PATH" IS '进京途径';
+COMMENT ON COLUMN "GAUSER"."GA_TEHUWORKS"."GOBEIJING_TYPE" IS '进京方式';
+COMMENT ON COLUMN "GAUSER"."GA_TEHUWORKS"."ACTTYPE_INBEIJING" IS '在京行为类型';
+COMMENT ON COLUMN "GAUSER"."GA_TEHUWORKS"."ADDRESS_INBEIJING" IS '在京巡回地点';
+COMMENT ON COLUMN "GAUSER"."GA_TEHUWORKS"."LOST_TIME" IS '失联时间';
+COMMENT ON COLUMN "GAUSER"."GA_TEHUWORKS"."FIND_TIME" IS '找到时间';
+COMMENT ON COLUMN "GAUSER"."GA_TEHUWORKS"."CONTENT" IS '诉求详细';
+
+--主键自增序列
+CREATE SEQUENCE ga_tehuworks_seq  INCREMENT BY 1 START WITH 1 NOMAXVALUE NOCYCLE NOCACHE;
+
+
+-- 日常性工作图片
+
+CREATE TABLE "GAUSER".ga_works_photos (
+  id NUMBER NOT NULL PRIMARY KEY,
+  work_id NUMBER DEFAULT(0) NOT NULL,
+  type NUMBER(2) DEFAULT(1) NOT NULL,
+  sort NUMBER(2) DEFAULT(1) NOT NULL,
+  path varchar(125) DEFAULT('') NOT NULL,
+  create_time TIMESTAMP DEFAULT(current_timestamp) NOT NULL,
+  isdel NUMBER(1) DEFAULT('0') NOT NULL
+) ;
+
+-- index
+Create Index i_work_id on "GAUSER".ga_works_photos(work_id);
+
+-- 字段注释
+COMMENT ON TABLE "GAUSER"."GA_WORKS_PHOTOS" IS '日常性工作图片';
+COMMENT ON COLUMN "GAUSER"."GA_WORKS_PHOTOS"."TYPE" IS '类型：1现场工作照，2信访人生活照';
+COMMENT ON COLUMN "GAUSER"."GA_WORKS_PHOTOS"."PATH" IS '图片';
+
+--主键自增序列
+CREATE SEQUENCE ga_works_photos_seq  INCREMENT BY 1 START WITH 1 NOMAXVALUE NOCYCLE NOCACHE;
+
+
+-- 事件采集
+CREATE TABLE "GAUSER".ga_events (
+  id NUMBER NOT NULL PRIMARY KEY,
+  post_user_id NUMBER DEFAULT(0) NOT NULL,
+  status NUMBER(2) DEFAULT(1) NOT NULL,
+  type NUMBER(2) DEFAULT(1) NOT NULL,
+  group_name_id NUMBER DEFAULT(0) NOT NULL,
+  group_name varchar(32) DEFAULT('') NOT NULL,
+  event_cate_id NUMBER DEFAULT(0) NOT NULL,
+  event_cate varchar(32) DEFAULT('') NOT NULL,
+  happen_time TIMESTAMP DEFAULT(current_timestamp) NOT NULL,
+  address varchar(125) DEFAULT('') NOT NULL,
+  people_number varchar(32) DEFAULT('') NOT NULL,
+  content varchar2(4000) DEFAULT('') NOT NULL,
+  do_unit_name varchar(125) DEFAULT('') NOT NULL,
+  create_time TIMESTAMP DEFAULT(current_timestamp) NOT NULL,
+  update_time TIMESTAMP DEFAULT(current_timestamp) NOT NULL,
+  isdel NUMBER(1) DEFAULT('0') NOT NULL
+);
+
+-- index
+Create Index ie_post_user_id on "GAUSER".ga_events(post_user_id);
+
+-- 字段注释
+COMMENT ON TABLE "GAUSER"."GA_EVENTS" IS '事件采集';
+COMMENT ON COLUMN "GAUSER"."GA_EVENTS"."STATUS" IS '状态：0撤销，1正常，2重新上报';
+COMMENT ON COLUMN "GAUSER"."GA_EVENTS"."GROUP_NAME" IS '涉及群体';
+COMMENT ON COLUMN "GAUSER"."GA_EVENTS"."EVENT_CATE" IS '事件类别';
+COMMENT ON COLUMN "GAUSER"."GA_EVENTS"."PEOPLE_NUMBER" IS '人数规模';
+COMMENT ON COLUMN "GAUSER"."GA_EVENTS"."CONTENT" IS '事因诉求';
+COMMENT ON COLUMN "GAUSER"."GA_EVENTS"."DO_UNIT_NAME" IS '处置单位';
+
+
+--主键自增序列
+CREATE SEQUENCE ga_events_seq  INCREMENT BY 1 START WITH 1 NOMAXVALUE NOCYCLE NOCACHE;
+
+
+
+-- 事件采集人员信息
+
+CREATE TABLE "GAUSER".ga_event_peoples (
+  id NUMBER NOT NULL PRIMARY KEY,
+  event_id NUMBER DEFAULT(0) NOT NULL,
+  name varchar(32) DEFAULT('') NOT NULL,
+  idnumber varchar(32) DEFAULT('') NOT NULL,
+  mobile varchar(32) DEFAULT('') NOT NULL,
+  create_time TIMESTAMP DEFAULT(current_timestamp) NOT NULL,
+  update_time TIMESTAMP DEFAULT(current_timestamp) NOT NULL,
+  isdel NUMBER(1) DEFAULT('0') NOT NULL
+) ;
+
+-- index
+Create Index i_event_id on "GAUSER".ga_event_peoples(event_id);
+
+-- 字段注释
+COMMENT ON TABLE "GAUSER"."GA_EVENT_PEOPLES" IS '事件采集人员信息';
+
+--主键自增序列
+CREATE SEQUENCE ga_event_peoples_seq  INCREMENT BY 1 START WITH 1 NOMAXVALUE NOCYCLE NOCACHE;
+
+
+-- 日常性工作
+CREATE TABLE "GAUSER".ga_daliyworks (
+  id NUMBER NOT NULL PRIMARY KEY,
+  post_user_id NUMBER DEFAULT(0) NOT NULL,
+  status NUMBER(2) DEFAULT(1) NOT NULL,
+  people_name varchar(32) DEFAULT('') NOT NULL,
+  people_idnumber varchar(32) DEFAULT('') NOT NULL,
+  people_mobile varchar(32) DEFAULT('') NOT NULL,
+  people_idcardpic0 varchar(125) DEFAULT('') NOT NULL,
+  people_idcardpic1 varchar(125) DEFAULT('') NOT NULL,
+  gobeijing_path_id NUMBER DEFAULT(0) NOT NULL,
+  gobeijing_path varchar(32) DEFAULT('') NOT NULL,
+  content  varchar2(4000) DEFAULT('') NOT NULL,
+  gotype_id NUMBER DEFAULT(0) NOT NULL,
+  gotype varchar(32) DEFAULT('') NOT NULL,
+  action_name_id NUMBER DEFAULT(0) NOT NULL,
+  action_name varchar(32) DEFAULT('') NOT NULL,
+  action_desn  varchar2(4000) DEFAULT('') NOT NULL,
+  work_content  varchar2(4000) DEFAULT('') NOT NULL,
+  create_time TIMESTAMP DEFAULT(current_timestamp) NOT NULL,
+  update_time TIMESTAMP DEFAULT(current_timestamp) NOT NULL,
+  isdel NUMBER(1) DEFAULT('0') NOT NULL
+) ;
+
+-- index
+Create Index id_post_user_id on "GAUSER".ga_daliyworks(post_user_id);
+
+-- 字段注释
+COMMENT ON TABLE "GAUSER"."GA_DALIYWORKS" IS '日常性工作';
+COMMENT ON COLUMN "GAUSER"."GA_DALIYWORKS"."STATUS" IS '状态：0撤销，1正常，2重新上报';
+COMMENT ON COLUMN "GAUSER"."GA_DALIYWORKS"."PEOPLE_NAME" IS '姓名';
+COMMENT ON COLUMN "GAUSER"."GA_DALIYWORKS"."PEOPLE_IDNUMBER" IS '身份证号';
+COMMENT ON COLUMN "GAUSER"."GA_DALIYWORKS"."PEOPLE_MOBILE" IS '通讯号码';
+COMMENT ON COLUMN "GAUSER"."GA_DALIYWORKS"."PEOPLE_IDCARDPIC0" IS '身份证正面照';
+COMMENT ON COLUMN "GAUSER"."GA_DALIYWORKS"."PEOPLE_IDCARDPIC1" IS '身份证反面照';
+COMMENT ON COLUMN "GAUSER"."GA_DALIYWORKS"."GOBEIJING_PATH" IS '进京途径';
+COMMENT ON COLUMN "GAUSER"."GA_DALIYWORKS"."CONTENT" IS '详细诉求';
+COMMENT ON COLUMN "GAUSER"."GA_DALIYWORKS"."GOTYPE" IS '上访方式';
+COMMENT ON COLUMN "GAUSER"."GA_DALIYWORKS"."ACTION_NAME" IS '过激行为';
+COMMENT ON COLUMN "GAUSER"."GA_DALIYWORKS"."ACTION_DESN" IS '行为描述';
+COMMENT ON COLUMN "GAUSER"."GA_DALIYWORKS"."WORK_CONTENT" IS '上访工作';
+
+
+--主键自增序列
+CREATE SEQUENCE ga_daliyworks_seq  INCREMENT BY 1 START WITH 1 NOMAXVALUE NOCYCLE NOCACHE;
+
+
+
+-- app token
+CREATE TABLE ga_app_tokens (
+  id NUMBER NOT NULL PRIMARY KEY,
+  user_id NUMBER DEFAULT(0) NOT NULL,
+  user_type NUMBER(2) DEFAULT(1) NOT NULL,
+  api_token varchar(33) DEFAULT('') NOT NULL,
+  token_expiry TIMESTAMP DEFAULT(current_timestamp) NOT NULL,
+  update_time TIMESTAMP DEFAULT(current_timestamp) NOT NULL
+) ;
+
+-- index
+Create Index i_type_user on "GAUSER".ga_app_tokens(user_type,user_id);
+
+--主键自增序列
+CREATE SEQUENCE ga_app_tokens_seq  INCREMENT BY 1 START WITH 1 NOMAXVALUE NOCYCLE NOCACHE;
+

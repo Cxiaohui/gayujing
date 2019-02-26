@@ -54,7 +54,7 @@ class Common extends ApiCommon{
         if(config('is_test')){
             return $auth_list[0];
         }
-
+//        \app\common\library\Mylog::write($auth_list,'auth');
         $res_user_id = Apitoken::checkToken($auth_list[0],trim($auth_list[1]));
         if($res_user_id<=0){
             //
@@ -65,9 +65,9 @@ class Common extends ApiCommon{
                 -3 =>'Token过期，请重新登录.'
             ];
 
-            if($res_user_id == -1){
-                \app\common\library\Mylog::write($auth_list,'auth');
-            }
+//            if($res_user_id == -1){
+            \app\common\library\Mylog::write($auth_list,'auth');
+//            }
 
             return $this -> res([
                 'code' => 401,

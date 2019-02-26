@@ -30,6 +30,26 @@ class Index extends Controller
 
     }
 
+    public function addblob(){
+
+        $imgurl = qnimg('gaqn/id/201902250043400.jpg');
+        $img_blob = file_get_contents($imgurl);
+        //$img_blob = addslashes($img_blob);
+//        $img_blob = base64_encode($img_blob);
+        //oci_new_descriptor(Db::instance(),OCI_D_LOB);
+        //exit;
+        $test = \app\index\model\Mytest::find(1);
+
+        $test->IMG_BLOD = $img_blob;
+        $test->save();
+
+
+//        print_r($test);
+
+
+
+    }
+
     public function oci(){
 
         /*config([

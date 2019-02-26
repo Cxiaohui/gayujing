@@ -43,6 +43,11 @@ class Tehus extends Common{
         $info['tongxi_idcardpic0'] = qnimg($info['tongxi_idcardpic0']);
         $info['tongxi_idcardpic1'] = qnimg($info['tongxi_idcardpic1']);
 
+        $info['can_edit'] = 0;
+        if($info['post_user_id'] == $this->user_id){
+            $info['can_edit'] = 1;
+        }
+
         return $this->res([
             'code'=>200,
             'msg'=>'ok',

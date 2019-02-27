@@ -31,6 +31,7 @@ class Options extends Common{
                 'people_nums'=>config('people_nums'),
                 'raodaos'=>config('raodaos'),
                 'suqiu_types'=>config('suqiu_types'),
+                'xinfang_cates'=>config('xinfang_cate'),
             ]
         ]);
 

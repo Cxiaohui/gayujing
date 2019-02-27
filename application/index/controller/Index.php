@@ -38,7 +38,12 @@ class Index extends Controller
 //        $img_blob = base64_encode($img_blob);
         //oci_new_descriptor(Db::instance(),OCI_D_LOB);
         //exit;
+
+        $mtest = new \app\index\model\Mytest();
+        $mtest->getPdo();
+
         $test = \app\index\model\Mytest::find(1);
+
 
         $test->IMG_BLOD = $img_blob;
         $test->save();

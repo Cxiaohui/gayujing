@@ -48,6 +48,8 @@ class Daliys extends Common{
         if($info['post_user_id'] == $this->user_id){
             $info['can_edit'] = 1;
         }
+        $xinfang_cates = ['','个访','集访'];
+        $info['xinfang_cate'] = $xinfang_cates[$info['xinfang_cate_id']];
 
 
         $live_photos = $daliyworks->photos()->field('id,path')->where('type','=',1)->order('sort asc')->select();

@@ -35,5 +35,8 @@ function tostring($data){
 }
 
 function qnimg($src){
+    if(strpos($src,'http://')!==false){
+        return $src;
+    }
     return config('app.qiniu.host').$src;
 }

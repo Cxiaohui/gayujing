@@ -107,9 +107,10 @@ CREATE TABLE `ga_daliyworks` (
   `gobeijing_act` varchar(32) NOT NULL DEFAULT '' COMMENT '进京行为类型',
   `raodao_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '绕道id',
   `raodao` varchar(32) NOT NULL DEFAULT '' COMMENT '绕道',
+  `xinfang_cate_id` tinyint(4) NOT NULL DEFAULT '0' COMMENT '信访形式0未知，1个访，2集访',
   PRIMARY KEY (`id`),
   KEY `post_user_id` (`post_user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='日常性工作';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='日常性工作';
 
 -- 工作中上传的图片
 

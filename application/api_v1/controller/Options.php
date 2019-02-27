@@ -22,6 +22,7 @@ class Options extends Common{
             'msg'=>'ok',
             'data'=>[
                 'gobeijing_path'=>config('gobeijing_path'),
+                'gobeijing_types'=>config('gobeijing_types'),
                 'acttype_inbeijing'=>config('acttype_inbeijing'),
                 'gotype'=>config('gotype'),
                 'action_names'=>config('action_names'),
@@ -29,6 +30,7 @@ class Options extends Common{
                 'event_cates'=>config('event_cates'),
                 'people_nums'=>config('people_nums'),
                 'raodaos'=>config('raodaos'),
+                'suqiu_types'=>config('suqiu_types'),
             ]
         ]);
 

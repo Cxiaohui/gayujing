@@ -14,13 +14,14 @@ return [
     // 数据库类型
     'type'            => 'mysql',
     // 服务器地址
-    'hostname'        => 'rm-wz9wg8c638x6se200vo.mysql.rds.aliyuncs.com',
+    'hostname'        => 'localhost',
     // 数据库名
     'database'        => 'ga_yujing',
     // 用户名
-    'username'        => 'gayujinguser',//
+    'username'        => 'root',//
     // 密码
-    'password'        => 'ieWw0sJd7dNmc',//
+//    'password'        => '12345678',//
+    'password'        => 'k43Evdo5Dm',//
     // 端口
     'hostport'        => '',
     // 连接dsn

@@ -160,7 +160,7 @@ return [
     ],
     'xinfang_cate'=>[
         ['id'=>1,'name'=>'个访'],
-        ['id'=>2,'name'=>'集访'],
+        ['id'=>2,'name'=>'集访，同行人员'],
     ],
     //信访行为
 //    'xinfang_types'=>[

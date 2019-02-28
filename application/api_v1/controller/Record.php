@@ -33,19 +33,19 @@ class Record extends Common{
         if($begin_time){
             $betime = date('Y-m-d H:i:s',strtotime($begin_time));
             if($betime){
-                $where .= " and update_time>='{$betime}'";
+                $where .= " and create_time>='{$betime}'";
             }
         }
 
         if($end_time){
             $entime = date('Y-m-d H:i:s',strtotime($end_time));
             if($entime){
-                $where .= " and update_time<='{$entime}'";
+                $where .= " and create_time<='{$entime}'";
             }
         }
 
         $sql = "select * from 
-(select id,'d' as name,gotype as type,post_user_id,update_time from ga_daliyworks where status>0 and isdel=0 {$where}
+(select id,'d' as name,xinfang_type as type,post_user_id,update_time from ga_daliyworks where status>0 and isdel=0 {$where}
 union 
 select id,'e' as name,type,post_user_id,update_time from ga_events where status>0 and isdel=0 {$where}
 union 
@@ -135,6 +135,15 @@ order by update_time desc
                 'msg'=>'数据不存在'
             ]);
         }
+
+        //检查是否是编辑本人的信息
+        if($info->post_user_id != $this->user_id){
+            return $this->res([
+                'code'=>201,
+                'msg'=>'当前账号无权撤销'
+            ]);
+        }
+
 
         if($info->status==0){
             return $this->res([

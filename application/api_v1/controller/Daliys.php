@@ -44,13 +44,15 @@ class Daliys extends Common{
         $info['people_idcardpic0'] = qnimg($info['people_idcardpic0']);
         $info['people_idcardpic1'] = qnimg($info['people_idcardpic1']);
 
+
+        $xinfang_cates = ['','个访','集访'];
+        $info['xinfang_cate'] = $xinfang_cates[$info['xinfang_cate_id']];
+
+
         $info['can_edit'] = 0;
         if($info['post_user_id'] == $this->user_id){
             $info['can_edit'] = 1;
         }
-        $xinfang_cates = ['','个访','集访'];
-        $info['xinfang_cate'] = $xinfang_cates[$info['xinfang_cate_id']];
-
 
         $live_photos = $daliyworks->photos()->field('id,path')->where('type','=',1)->order('sort asc')->select();
 
@@ -172,6 +174,17 @@ class Daliys extends Common{
         if(isset($post['id']) && $post['id']>0){
             $status = 2;
             $daliyworks = Daliyworks::get($post['id']);
+
+            //检查是否是编辑本人的信息
+            if($daliyworks->post_user_id != $this->user_id){
+                return $this->res([
+                    'code'=>201,
+                    'msg'=>'当前账号无权修改'
+                ]);
+            }
+
+
+
         }else{
             $daliyworks = new Daliyworks();
         }
@@ -248,6 +261,8 @@ class Daliys extends Common{
         $daliyworks->action_desn = $post['action_desn'];
         //走访工作
         $daliyworks->work_content = $post['work_content'];
+
+        $daliyworks->xinfang_cate_id = $post['xinfang_cate_id'];
 
 
         //exit;

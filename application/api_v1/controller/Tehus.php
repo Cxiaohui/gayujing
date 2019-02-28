@@ -146,6 +146,17 @@ class Tehus extends Common{
         if(isset($post['id']) && $post['id']>0){
             $status = 2;
             $tehuworks = Tehuworks::get($post['id']);
+
+            //检查是否是编辑本人的信息
+            if($tehuworks->post_user_id != $this->user_id){
+                return $this->res([
+                    'code'=>201,
+                    'msg'=>'当前账号无权修改'
+                ]);
+            }
+
+
+
         }else{
             $tehuworks = new Tehuworks();
         }

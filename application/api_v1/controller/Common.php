@@ -105,17 +105,18 @@ class Common extends ApiCommon{
         if(!in_array($this->cur_user['utype'],[1,2,3])){
             return false;
         }
-
-        if($this->cur_user['utype'] == 1){
+        //超级用户
+        /*if($this->cur_user['utype'] == 1){
             return true;
-        }
-        if($this->cur_user['utype'] == 2){
+        }*/
+        //全浏览权限账号：可查看所有账号上传的内容。不能进行删除和重新编辑，仅支持浏览
+        /*if($this->cur_user['utype'] == 2){
             if($this->request->isGet()){
                 return true;
             }
 
             return false;
-        }
+        }*/
         return true;
     }
 

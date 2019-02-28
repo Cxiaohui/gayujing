@@ -129,6 +129,16 @@ class Events extends Common{
         if(isset($post['id']) && $post['id']>0){
             $status = 2;
             $event = EventsModel::get($post['id']);
+
+
+            //检查是否是编辑本人的信息
+            if($event->post_user_id != $this->user_id){
+                return $this->res([
+                    'code'=>201,
+                    'msg'=>'当前账号无权修改'
+                ]);
+            }
+
         }else{
             $event = new EventsModel();
         }

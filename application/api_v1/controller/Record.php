@@ -33,14 +33,14 @@ class Record extends Common{
         if($begin_time){
             $betime = date('Y-m-d H:i:s',strtotime($begin_time));
             if($betime){
-                $where .= " and create_time>='{$betime}'";
+                $where .= " and update_time>='{$betime}'";
             }
         }
 
         if($end_time){
             $entime = date('Y-m-d H:i:s',strtotime($end_time));
             if($entime){
-                $where .= " and create_time<='{$entime}'";
+                $where .= " and update_time<='{$entime}'";
             }
         }
 
@@ -56,9 +56,11 @@ order by update_time desc
 
         if(!$data){
             return $this->res([
-                'code'=>202,
+                'code'=>200,
                 'msg'=>'暂无数据',
-//                'w'=>$where
+                'data'=>[
+                    'list'=>[]
+                ]
             ]);
         }
 

@@ -11,8 +11,6 @@ use think\Db;
 class Test extends Common{
 
 
-
-
     public function t2(){
         print_r(config('database.'));
     }
@@ -57,48 +55,6 @@ class Test extends Common{
         ]);
     }
 
-    public function mytest(){
-
-
-
-        $imgurl = qnimg('gongan/work/201902241254532.jpg');
-        $lob_upload = file_get_contents($imgurl);
-        //$lob_upload = '';
-
-        $ocle = \app\common\library\MyOracle::instance();
-        $conn = $ocle->getConn();
-
-//        $stmt = ociparse($conn,"update MYTEST2 set IMG2_BLOB=EMPTY_BLOB() where ID='1' RETURNING IMG2_BLOB INTO :imgblod2");
-        $sql = "update MYTEST2 set IMG2_BLOB=EMPTY_BLOB() where ID='1' RETURNING IMG2_BLOB INTO :imgblod2";
-//        $stmt = ociparse($conn,"update MYTEST2 set AGE=34 where ID=1");
-        $ocle->ociParse($sql);
-        $ocle->ociNewDescriptor();
-//        $lob = ocinewdescriptor($conn, OCI_D_LOB);
-
-        //将生成的LOB对象绑定到前面SQL语句返回的定位符上。
-        $ocle->ociLOBBindByName(':imgblod2');
-        $ocle->ociExecute();
-
-
-        if($ocle->lobSave($lob_upload)){
-
-            $ocle->ociCommit();
-            $ocle->ociFreeDesc();
-            echo "上传成功〈br〉";
-
-        }else{
-
-            echo "上传失败〈br〉";
-
-        }
-
-//释放LOB对象
-
-        $ocle->ociFreeStatement();
-        $ocle->close();
-//        ocilogoff(self::$conn);
-        //print_r($test);
-    }
 
     public function getoriimg($id=0,$filed=''){
         if(!$id){
@@ -108,7 +64,7 @@ class Test extends Common{
         if(!$info){
             return ['not found'];
         }
-//        var_dump($info->IMG_BLOD);
+
         header('Content-type: image/jpg');
         echo stream_get_contents($info->IMG_BLOD);
         exit;

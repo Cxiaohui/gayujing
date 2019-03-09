@@ -24,7 +24,7 @@ class Tehuwork extends Validate{
         'tongxi_mobile'=>'require',
 //        'tongxi_idcardpic0'=>'require',
 //        'tongxi_idcardpic1'=>'require',
-        'gobeijing_path'=>'require',
+//        'gobeijing_path'=>'require',
         'gobeijing_type'=>'require',
         'acttype_inbeijing'=>'require',
         'address_inbeijing'=>'require',
@@ -41,7 +41,7 @@ class Tehuwork extends Validate{
 //        'xinfang_idcardpic0.require' => '信访人身份证正面照片必须',
 //        'xinfang_idcardpic1.require' => '信访人身份反面证照片必须',
 
-        'gobeijing_path.require'   => '进京途径必须',
+//        'gobeijing_path.require'   => '进京途径必须',
         'gobeijing_type.require'   => '进京方式必须',
 
         'tongxi_name.require' => '同行人姓名必须',

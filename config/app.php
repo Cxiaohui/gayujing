@@ -145,7 +145,8 @@ return [
 
     //
     'qiniu'=>[
-        'host'=>'http://pnd68waxi.bkt.clouddn.com/',
+//        'host'=>'http://pnd68waxi.bkt.clouddn.com/',
+        'host'=>'http://gastatic.appasd.com/',
         'AccessKey'=>'u1HmuhmWybxKhcwINFwF_rHm7IbJFv6PJtKlXr_v',
         'SecretKey'=>'nnPRgLlGosEVkxkFqsnnNHiPISH9_jYW008wjpcQ',
         'file_key_prefix'=>'gaqn/',

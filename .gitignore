@@ -1,5 +1,4 @@
 composer.lock
 config/database.php
 runtime/
-thinkphp/
 vendor

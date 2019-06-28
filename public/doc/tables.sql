@@ -1,3 +1,12 @@
+CREATE TABLE ga_tielu_datas(
+`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`post_user_id` int(10) unsigned NOT NULL DEFAULT '0',
+content text not null,
+`create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='铁路预警信息';
+
 -- 系统使用用户
 CREATE TABLE `ga_sysusers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
